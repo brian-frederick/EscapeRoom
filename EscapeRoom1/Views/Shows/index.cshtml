@@ -1,0 +1,19 @@
+﻿@model List<EscapeRoom.Models.ProductModel>
+
+@{
+    ViewBag.Title = "ShowList";
+}
+
+<h2>ShowList</h2>
+
+<div class="col-sm-3">
+    @foreach (var item in Model)
+    {
+        <h2>@item.title</h2>
+        <h4>@item.start.Value.ToString("ddd, MM/dd")</h4>
+        <h4>@item.start.Value.ToString("h:mm")</h4>
+        <p>@item.Price.Value.ToString("c")</p>
+    }
+ </div>
+    
+
