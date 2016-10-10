@@ -1,22 +1,22 @@
 ﻿@model EscapeRoom.Models.ProductModel
 
 @{
-    ViewBag.Title = Model.Name;
+    ViewBag.Title = Model.title;
 }
 <img src="~/Content/images/tldClock.jpg" />
 
 <div class="row">
     <div class="col-sm-3">
-        <h2>@Model.Name</h2>
-        <h4>@Model.Date.Value.ToString("ddd, MM/dd")</h4>
-        <h4>@Model.Date.Value.ToString("h:mm")</h4>
+        <h2>@Model.title</h2>
+        <h4>@Model.start.Value.ToString("ddd, MM/dd")</h4>
+
         <p>@Model.Price.Value.ToString("c")</p>
     </div>
     <div class="col-sm-6">
 @using (Html.BeginForm())
 {       
-        @Html.HiddenFor(m => Model.Name)
-        @Html.HiddenFor(m => Model.Date)
+        @Html.HiddenFor(m => Model.title)
+        @Html.HiddenFor(m => Model.start)
 
     <form class="form-inline">
         <legend>Purchase Tickets Now</legend>
