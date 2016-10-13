@@ -59,6 +59,7 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="dbo\Script" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Game.sql" />
@@ -66,8 +67,21 @@
     <Build Include="dbo\Tables\Basket.sql" />
     <Build Include="dbo\Tables\PaymentInfo.sql" />
     <Build Include="dbo\Tables\User.sql" />
+    <Build Include="dbo\Tables\BasketPlayers.sql" />
+    <Build Include="dbo\Tables\BasketPaymentInfo.sql" />
+    <Build Include="dbo\Tables\webpages_UsersInRoles.sql" />
+    <Build Include="dbo\Tables\webpages_Roles.sql" />
+    <Build Include="dbo\Tables\webpages_OAuthMembership.sql" />
+    <Build Include="dbo\Tables\webpages_Membership.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Session.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="dbo\Script\Script.PostDeployment1.sql" />
+    <None Include="dbo\Script\Script.PostDeployment2.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="EscapeRoomDB.refactorlog" />
   </ItemGroup>
 </Project>
