@@ -1,3 +1,11 @@
 ﻿<p>
-    @Html.ActionLink("Login", "Index", "Login")
+    @if (User.Identity.IsAuthenticated)
+    {
+        <span>Welcome, @User.Identity.Name</span>
+        <span>@Html.ActionLink("Log Out", "logout", "Account")</span>
+    }
+    else
+    {
+        @Html.ActionLink("Login", "login", "Account")
+    }
 </p>

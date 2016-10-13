@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace EscapeRoom
 {
@@ -16,6 +17,11 @@ namespace EscapeRoom
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            WebMatrix.WebData.WebSecurity.InitializeDatabaseConnection("EscapeRoom", "User", "Id", "Email", true);
+
+            if (!Roles.RoleExists("Administrator"))
+                Roles.CreateRole("Administrator");
         }
     }
 }

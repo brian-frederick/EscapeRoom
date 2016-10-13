@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EscapeRoom.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,26 +11,41 @@ namespace EscapeRoom.Controllers
     {
         // GET: Product
         public ActionResult Index(int? id)
-        {           
-            if (id == 1)
+        {
+            using (EscapeRoom.Models.EscapeRoomDBEntities entities = new Models.EscapeRoomDBEntities())
             {
-                return View(new Models.ProductModel { title = "The Last Defender", id = 001, start = new DateTime(2016, 10, 18, 19, 30, 0), Price = 40m });
-            }
-            else if (id == 2)
-            {
-                return View(new Models.ProductModel { title = "The Last Defender", id = 002, start = new DateTime(2016, 10, 19, 21, 30, 0), Price = 40m });
-            }
+                var session = entities.Sessions.Single(x => x.Id == id);
+                Session model = new Session();
+                model.Id = session.Id;
+                model.Game = session.Game;
+                model.Price = session.Price;
+                model.Start = session.Start;
 
-            else
-            {
-                return HttpNotFound("object not found");
-            }           
+                return View(model);
+            }
         }
         //POST: Product
         [HttpPost]
-        public ActionResult Index(Models.ProductModel model)
+        public ActionResult Index(User model)
         {
             //TO DO: Add Product to cart in Database!
+            using (EscapeRoom.Models.EscapeRoomDBEntities entities = new Models.EscapeRoomDBEntities())
+            {
+
+                var newEntity = new User { };
+                newEntity.DateCreated = DateTime.Now;
+                newEntity.Id = entities.Users.Max(x => x.Id) + 1;
+                newEntity.FirstName = model.FirstName;
+                newEntity.LastName = model.LastName;
+                newEntity.Phone = model.Phone;
+                newEntity.Email = model.Email;
+
+
+                entities.Users.Add(newEntity);
+                    
+                entities.SaveChanges();                    
+            }
+
             return RedirectToAction("Home", "Index");
         }
         

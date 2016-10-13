@@ -1,0 +1,524 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EscapeRoomDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Basket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SessionID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BasketPaymentInfo">
+          <Key>
+            <PropertyRef Name="BasketID" />
+            <PropertyRef Name="PaymentInfoID" />
+          </Key>
+          <Property Name="BasketID" Type="int" Nullable="false" />
+          <Property Name="PaymentInfoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BasketPlayers">
+          <Key>
+            <PropertyRef Name="PlayerEmail" />
+            <PropertyRef Name="BasketID" />
+          </Key>
+          <Property Name="PlayerEmail" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="BasketID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="Title" />
+          </Key>
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="Length" Type="int" Nullable="false" />
+          <Property Name="RunStart" Type="datetime" Nullable="false" />
+          <Property Name="RunEnd" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="FormOfPayment" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreditCardNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Expiration" Type="datetime" />
+          <Property Name="SecCode" Type="int" />
+          <Property Name="BillingStreet" Type="nvarchar" MaxLength="250" />
+          <Property Name="BillingUnit" Type="nvarchar" MaxLength="250" />
+          <Property Name="BillingCity" Type="nvarchar" MaxLength="250" />
+          <Property Name="BillingState" Type="nvarchar" MaxLength="250" />
+          <Property Name="BillingZip" Type="nvarchar" MaxLength="250" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Measurements" Type="nvarchar" MaxLength="250" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Start" Type="datetime" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="SoldOut" Type="bit" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Basket_ToSession">
+          <End Role="Session" Type="Self.Session" Multiplicity="1" />
+          <End Role="Basket" Type="Self.Basket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="SessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Basket_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Basket" Type="Self.Basket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BasketPaymentInfo_Basket">
+          <End Role="Basket" Type="Self.Basket" Multiplicity="1" />
+          <End Role="BasketPaymentInfo" Type="Self.BasketPaymentInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Basket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BasketPaymentInfo">
+              <PropertyRef Name="BasketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BasketPaymentInfo_PaymentInfo">
+          <End Role="PaymentInfo" Type="Self.PaymentInfo" Multiplicity="1" />
+          <End Role="BasketPaymentInfo" Type="Self.BasketPaymentInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BasketPaymentInfo">
+              <PropertyRef Name="PaymentInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BasketPlayers_Basket">
+          <End Role="Basket" Type="Self.Basket" Multiplicity="1" />
+          <End Role="BasketPlayers" Type="Self.BasketPlayers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Basket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BasketPlayers">
+              <PropertyRef Name="BasketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BasketPlayers_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="BasketPlayers" Type="Self.BasketPlayers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="BasketPlayers">
+              <PropertyRef Name="PlayerEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentInfo_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="PaymentInfo" Type="Self.PaymentInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentInfo">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_ToGame">
+          <End Role="Game" Type="Self.Game" Multiplicity="0..1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Title" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="Title" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EscapeRoomDBModelStoreContainer">
+          <EntitySet Name="Basket" EntityType="Self.Basket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BasketPaymentInfo" EntityType="Self.BasketPaymentInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BasketPlayers" EntityType="Self.BasketPlayers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentInfo" EntityType="Self.PaymentInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Basket_ToSession" Association="Self.FK_Basket_ToSession">
+            <End Role="Session" EntitySet="Session" />
+            <End Role="Basket" EntitySet="Basket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Basket_ToUser" Association="Self.FK_Basket_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Basket" EntitySet="Basket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BasketPaymentInfo_Basket" Association="Self.FK_BasketPaymentInfo_Basket">
+            <End Role="Basket" EntitySet="Basket" />
+            <End Role="BasketPaymentInfo" EntitySet="BasketPaymentInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BasketPaymentInfo_PaymentInfo" Association="Self.FK_BasketPaymentInfo_PaymentInfo">
+            <End Role="PaymentInfo" EntitySet="PaymentInfo" />
+            <End Role="BasketPaymentInfo" EntitySet="BasketPaymentInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BasketPlayers_Basket" Association="Self.FK_BasketPlayers_Basket">
+            <End Role="Basket" EntitySet="Basket" />
+            <End Role="BasketPlayers" EntitySet="BasketPlayers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BasketPlayers_Player" Association="Self.FK_BasketPlayers_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="BasketPlayers" EntitySet="BasketPlayers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentInfo_ToUser" Association="Self.FK_PaymentInfo_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="PaymentInfo" EntitySet="PaymentInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToGame" Association="Self.FK_Session_ToGame">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EscapeRoomDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EscapeRoomDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Baskets" EntityType="EscapeRoomDBModel.Basket" />
+          <EntitySet Name="Games" EntityType="EscapeRoomDBModel.Game" />
+          <EntitySet Name="PaymentInfoes" EntityType="EscapeRoomDBModel.PaymentInfo" />
+          <EntitySet Name="Players" EntityType="EscapeRoomDBModel.Player" />
+          <EntitySet Name="Sessions" EntityType="EscapeRoomDBModel.Session" />
+          <EntitySet Name="Users" EntityType="EscapeRoomDBModel.User" />
+          <AssociationSet Name="FK_Basket_ToSession" Association="EscapeRoomDBModel.FK_Basket_ToSession">
+            <End Role="Session" EntitySet="Sessions" />
+            <End Role="Basket" EntitySet="Baskets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Basket_ToUser" Association="EscapeRoomDBModel.FK_Basket_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Basket" EntitySet="Baskets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToGame" Association="EscapeRoomDBModel.FK_Session_ToGame">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Session" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentInfo_ToUser" Association="EscapeRoomDBModel.FK_PaymentInfo_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PaymentInfo" EntitySet="PaymentInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="BasketPaymentInfo" Association="EscapeRoomDBModel.BasketPaymentInfo">
+            <End Role="Basket" EntitySet="Baskets" />
+            <End Role="PaymentInfo" EntitySet="PaymentInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="BasketPlayers" Association="EscapeRoomDBModel.BasketPlayers">
+            <End Role="Basket" EntitySet="Baskets" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Basket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SessionID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Session" Relationship="EscapeRoomDBModel.FK_Basket_ToSession" FromRole="Basket" ToRole="Session" />
+          <NavigationProperty Name="User" Relationship="EscapeRoomDBModel.FK_Basket_ToUser" FromRole="Basket" ToRole="User" />
+          <NavigationProperty Name="PaymentInfoes" Relationship="EscapeRoomDBModel.BasketPaymentInfo" FromRole="Basket" ToRole="PaymentInfo" />
+          <NavigationProperty Name="Players" Relationship="EscapeRoomDBModel.BasketPlayers" FromRole="Basket" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="Title" />
+          </Key>
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="Length" Type="Int32" Nullable="false" />
+          <Property Name="RunStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RunEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Sessions" Relationship="EscapeRoomDBModel.FK_Session_ToGame" FromRole="Game" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="PaymentInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FormOfPayment" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreditCardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Expiration" Type="DateTime" Precision="3" />
+          <Property Name="SecCode" Type="Int32" />
+          <Property Name="BillingStreet" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BillingUnit" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BillingCity" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BillingState" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BillingZip" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="EscapeRoomDBModel.FK_PaymentInfo_ToUser" FromRole="PaymentInfo" ToRole="User" />
+          <NavigationProperty Name="Baskets" Relationship="EscapeRoomDBModel.BasketPaymentInfo" FromRole="PaymentInfo" ToRole="Basket" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Measurements" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Baskets" Relationship="EscapeRoomDBModel.BasketPlayers" FromRole="Player" ToRole="Basket" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="SoldOut" Type="Boolean" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Baskets" Relationship="EscapeRoomDBModel.FK_Basket_ToSession" FromRole="Session" ToRole="Basket" />
+          <NavigationProperty Name="Game" Relationship="EscapeRoomDBModel.FK_Session_ToGame" FromRole="Session" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Baskets" Relationship="EscapeRoomDBModel.FK_Basket_ToUser" FromRole="User" ToRole="Basket" />
+          <NavigationProperty Name="PaymentInfoes" Relationship="EscapeRoomDBModel.FK_PaymentInfo_ToUser" FromRole="User" ToRole="PaymentInfo" />
+        </EntityType>
+        <Association Name="FK_Basket_ToSession">
+          <End Type="EscapeRoomDBModel.Session" Role="Session" Multiplicity="1" />
+          <End Type="EscapeRoomDBModel.Basket" Role="Basket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="SessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Basket_ToUser">
+          <End Type="EscapeRoomDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="EscapeRoomDBModel.Basket" Role="Basket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_ToGame">
+          <End Type="EscapeRoomDBModel.Game" Role="Game" Multiplicity="0..1" />
+          <End Type="EscapeRoomDBModel.Session" Role="Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Title" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="Title" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentInfo_ToUser">
+          <End Type="EscapeRoomDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="EscapeRoomDBModel.PaymentInfo" Role="PaymentInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentInfo">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BasketPaymentInfo">
+          <End Type="EscapeRoomDBModel.Basket" Role="Basket" Multiplicity="*" />
+          <End Type="EscapeRoomDBModel.PaymentInfo" Role="PaymentInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="BasketPlayers">
+          <End Type="EscapeRoomDBModel.Basket" Role="Basket" Multiplicity="*" />
+          <End Type="EscapeRoomDBModel.Player" Role="Player" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EscapeRoomDBModelStoreContainer" CdmEntityContainer="EscapeRoomDBEntities">
+          <EntitySetMapping Name="Baskets">
+            <EntityTypeMapping TypeName="EscapeRoomDBModel.Basket">
+              <MappingFragment StoreEntitySet="Basket">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="EscapeRoomDBModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="RunEnd" ColumnName="RunEnd" />
+                <ScalarProperty Name="RunStart" ColumnName="RunStart" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentInfoes">
+            <EntityTypeMapping TypeName="EscapeRoomDBModel.PaymentInfo">
+              <MappingFragment StoreEntitySet="PaymentInfo">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BillingZip" ColumnName="BillingZip" />
+                <ScalarProperty Name="BillingState" ColumnName="BillingState" />
+                <ScalarProperty Name="BillingCity" ColumnName="BillingCity" />
+                <ScalarProperty Name="BillingUnit" ColumnName="BillingUnit" />
+                <ScalarProperty Name="BillingStreet" ColumnName="BillingStreet" />
+                <ScalarProperty Name="SecCode" ColumnName="SecCode" />
+                <ScalarProperty Name="Expiration" ColumnName="Expiration" />
+                <ScalarProperty Name="CreditCardNumber" ColumnName="CreditCardNumber" />
+                <ScalarProperty Name="FormOfPayment" ColumnName="FormOfPayment" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="EscapeRoomDBModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Measurements" ColumnName="Measurements" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sessions">
+            <EntityTypeMapping TypeName="EscapeRoomDBModel.Session">
+              <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SoldOut" ColumnName="SoldOut" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EscapeRoomDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BasketPaymentInfo" TypeName="EscapeRoomDBModel.BasketPaymentInfo" StoreEntitySet="BasketPaymentInfo">
+            <EndProperty Name="PaymentInfo">
+              <ScalarProperty Name="Id" ColumnName="PaymentInfoID" />
+            </EndProperty>
+            <EndProperty Name="Basket">
+              <ScalarProperty Name="ID" ColumnName="BasketID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="BasketPlayers" TypeName="EscapeRoomDBModel.BasketPlayers" StoreEntitySet="BasketPlayers">
+            <EndProperty Name="Player">
+              <ScalarProperty Name="Email" ColumnName="PlayerEmail" />
+            </EndProperty>
+            <EndProperty Name="Basket">
+              <ScalarProperty Name="ID" ColumnName="BasketID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
