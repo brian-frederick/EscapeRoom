@@ -60,6 +60,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="dbo\Script" />
+    <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Game.sql" />
@@ -73,6 +74,7 @@
     <Build Include="dbo\Tables\webpages_Roles.sql" />
     <Build Include="dbo\Tables\webpages_OAuthMembership.sql" />
     <Build Include="dbo\Tables\webpages_Membership.sql" />
+    <Build Include="dbo\Stored Procedures\sp_getShows.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Session.sql" />

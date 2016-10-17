@@ -46,14 +46,3 @@ namespace EscapeRoom.Controllers
     }
 }
 
-//different way of doing this which doesn't quite function yet.
-//var sessions = entities.Sessions.ToArray().Select(x => new SessionModel
-// {
-//     Id = x.Id,
-//     Start = x.Start,
-//     Title = x.Title,
-//     Color = x.Color,
-//     Price = x.Price,
-//     SoldOut = x.SoldOut,
-//     //Inventory = x.Game.Capacity - x.Baskets.SelectMany(y => y.Players).Count()
-// });

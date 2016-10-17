@@ -1,6 +1,7 @@
 ﻿using EscapeRoom.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,8 @@ namespace EscapeRoom.Controllers
 {
     public class AccountController : Controller
     {
+        public int AppSettings { get; private set; }
+
         //GET: Account
         public ActionResult Index()
         {
@@ -49,7 +52,7 @@ namespace EscapeRoom.Controllers
             RegistrationModel model = new RegistrationModel();
             return View();
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Register(RegistrationModel model)
         {
@@ -62,13 +65,36 @@ namespace EscapeRoom.Controllers
                 else
                 {
                     //model.DateCreated = DateTime.UtcNow;
-                    WebMatrix.WebData.WebSecurity.CreateUserAndAccount(model.Email, model.Password, new { DateCreated = DateTime.UtcNow, FirstName = model.FirstName, LastName = model.LastName, Phone = model.Phone, Email = model.Email }, false);
-                    System.Web.Security.FormsAuthentication.SetAuthCookie(model.Email, true);
+                    string token = WebMatrix.WebData.WebSecurity.CreateUserAndAccount(model.Email, model.Password,
+                        new
+                        {
+                            DateCreated = DateTime.UtcNow,
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Phone = model.Phone,
+                            Email = model.Email
+                        },
+                        true);
+                    //System.Web.Security.FormsAuthentication.SetAuthCookie(model.Email, true);
+
+                    string apiKey = ConfigurationManager.AppSettings["SendGrid.Key"];
+                    SendGrid.SendGridAPIClient client = new SendGrid.SendGridAPIClient(apiKey);
+
+                    SendGrid.Helpers.Mail.Email from = new SendGrid.Helpers.Mail.Email("admin@EscapeRoom.com");
+                    string subject = "Complete your EscapeRoom Registration";
+                    SendGrid.Helpers.Mail.Email to = new SendGrid.Helpers.Mail.Email(model.Email);
+                    string emailContent = string.Format("<html><body><a href=\"{0}\">Complete your registration</a></body></html>", Request.Url.GetLeftPart(UriPartial.Authority) +
+                         "/Account/REgisterConfirm/" + HttpUtility.UrlEncode(token) + "?email=" + HttpUtility.UrlEncode(model.Email));
+                    SendGrid.Helpers.Mail.Content content = new SendGrid.Helpers.Mail.Content("Text/html", emailContent);
+                    SendGrid.Helpers.Mail.Mail mail = new SendGrid.Helpers.Mail.Mail(from, subject, to, content);
+
+                    client.client.mail.send.post(requestBody: mail.Get());
+                    return RedirectToAction("RegisterComplete");
                 }
-                return RedirectToAction("Index", "Home");
+                return View(model);
+
             }
             return View(model);
-            
         }
 
         //GET: Account/LogOut
@@ -84,8 +110,6 @@ namespace EscapeRoom.Controllers
             RegistrationModel model = new RegistrationModel();
             return View();
         }
-
-
 
         [HttpPost]
         public ActionResult Login(RegistrationModel model)
@@ -105,6 +129,21 @@ namespace EscapeRoom.Controllers
                 }
 
             }
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegisterComplete()
+        {
+            return View();
+        }
+        public ActionResult RegisterConfirm(string id, string email)
+        {
+            if (WebMatrix.WebData.WebSecurity.ConfirmAccount(email, id))
+            {
+                ViewBag.Confirmed = true;
+                return View();
+            };
             return View();
         }
     }

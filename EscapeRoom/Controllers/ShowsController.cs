@@ -10,15 +10,26 @@ namespace EscapeRoom.Controllers
     public class ShowsController : Controller
     {
         // GET: Shows
-        public ActionResult Index()
+        public ActionResult Index(string showName)
         {
-            List<ProductModel> list = new List<ProductModel>();
-            list.Add(new ProductModel() { title = "The Last Defender", start=new DateTime(2016, 10, 15, 7, 30, 0), Price = 40, id = 007 });
-            list.Add(new ProductModel() { title = "Nova to Lodestar", start = new DateTime(2016, 10, 15, 7, 30, 0), Price = 50, id = 007 });
-            list.Add(new ProductModel() { title = "The Last Defender", start = new DateTime(2016, 10, 16, 7, 30, 0), Price = 40, id = 007 });
-            list.Add(new ProductModel() { title = "Nova to Lodestar", start = new DateTime(2016, 10, 16, 7, 30, 0), Price = 50, id = 007 });
-            return View(list);
+            //TODO: Get Parameter from url
+            showName = "The Last Defender";
+
+            using (EscapeRoomDBEntities entity = new Models.EscapeRoomDBEntities())
+            {
+                //Game chosenGame = sp_getShows();
+                //var gameSelection = entity.;
+            }
+
+            return View();   
         }
     }
 }
 //TODO: Add Session Controller Scaffolding
+
+//List<ProductModel> list = new List<ProductModel>();
+//list.Add(new ProductModel() { title = "The Last Defender", start = new DateTime(2016, 10, 15, 7, 30, 0), Price = 40, id = 007 });
+//            list.Add(new ProductModel() { title = "Nova to Lodestar", start = new DateTime(2016, 10, 15, 7, 30, 0), Price = 50, id = 007 });
+//            list.Add(new ProductModel() { title = "The Last Defender", start = new DateTime(2016, 10, 16, 7, 30, 0), Price = 40, id = 007 });
+//            list.Add(new ProductModel() { title = "Nova to Lodestar", start = new DateTime(2016, 10, 16, 7, 30, 0), Price = 50, id = 007 });
+//            return View(list);
