@@ -29,7 +29,8 @@ namespace EscapeRoom
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/fullcalendar.css"));
+                      "~/Content/fullcalendar.css",
+                      "~/Content/Index.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts").Include(
                 "~/Scripts/lib/moment.min.js",

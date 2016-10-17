@@ -17,32 +17,43 @@ namespace EscapeRoom.Controllers
 
         public ActionResult Data()
         {
-            List<Session> sessionModel = new List<Session>();
-
+           
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
-
-                foreach (Session item in entities.Sessions)
+                List<SessionModel> list = new List<SessionModel>();
+                foreach(Session s in entities.Sessions)
                 {
-                    sessionModel.Add(item);
+                    SessionModel sMod = new SessionModel();
+                    sMod.Id = s.Id;
+                    sMod.Title = s.Title;
+                    sMod.Color = s.Color;
+                    sMod.Start = s.Start;
+                    //having an issue here with null inventory
+                    //sMod.Inventory = s.Game.Capacity - s.Baskets.SelectMany(y => y.Players).Count();
+                    list.Add(sMod);                       
                 }
-                /*var session = entities.Sessions.Single(x => x.Id == id);
-                Session model = new Session();
-                model.Id = session.Id;
-                model.Game = session.Game;
-                model.Price = session.Price;
-                model.StartTime = session.StartTime;*/
 
+                //change to camelcase from initial caps for the javascript calendar package
+                Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver camelSerializer = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+                Newtonsoft.Json.JsonSerializerSettings settings = new Newtonsoft.Json.JsonSerializerSettings();
+                settings.ContractResolver = camelSerializer;
+                string content = Newtonsoft.Json.JsonConvert.SerializeObject(list, settings);
 
-                /*List<ProductModel> list = new List<ProductModel>();
-                list.Add(new ProductModel() { title = "The Last Defender", start = new DateTime(2016, 10, 15, 7, 30, 0), Price = 40, id = 007, url= "http://localhost:51941/CheckOut/Index", inventory = 10 });
-                list.Add(new ProductModel() { title = "Nova to Lodestar", start = new DateTime(2016, 10, 15, 7, 30, 0), Price = 50, id = 008, url = "http://localhost:51941/CheckOut/Index", inventory = 7 });
-                list.Add(new ProductModel() { title = "The Last Defender", start = new DateTime(2016, 10, 16, 7, 30, 0), Price = 40, id = 009, url = "http://localhost:51941/CheckOut/Index", inventory = 3 });
-                list.Add(new ProductModel() { title = "Nova to Lodestar", start = new DateTime(2016, 10, 16, 7, 30, 0), Price = 50, id = 010, url = "http://localhost:51941/CheckOut/Index", inventory = 9 });
-
-                */
+                //return the list
+                return Content(content);
             }
-            return Json(sessionModel, JsonRequestBehavior.AllowGet);
         }
     }
 }
+
+//different way of doing this which doesn't quite function yet.
+//var sessions = entities.Sessions.ToArray().Select(x => new SessionModel
+// {
+//     Id = x.Id,
+//     Start = x.Start,
+//     Title = x.Title,
+//     Color = x.Color,
+//     Price = x.Price,
+//     SoldOut = x.SoldOut,
+//     //Inventory = x.Game.Capacity - x.Baskets.SelectMany(y => y.Players).Count()
+// });

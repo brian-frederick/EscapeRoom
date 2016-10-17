@@ -17,7 +17,7 @@ namespace EscapeRoom.Controllers
                 var session = entities.Sessions.Single(x => x.Id == id);
                 Session model = new Session();
                 model.Id = session.Id;
-                model.Game = session.Game;
+                model.Title = session.Title;
                 model.Price = session.Price;
                 model.Start = session.Start;
 

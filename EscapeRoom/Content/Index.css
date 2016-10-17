@@ -1,0 +1,27 @@
+﻿body {
+
+}
+.body-content{
+    width:80%;
+}
+.jumbotron {
+    text-align:center;
+    background-color: transparent;
+    margin-bottom: 1em;
+}
+.showcase {
+    text-align:center;
+}
+
+/*--------Show Page--------------*/
+.leaderboard {
+    margin:2em;
+    background-color:black;
+    border-radius:10%;
+    color: orange;
+}
+
+.title{
+    text-align: center;
+}
+

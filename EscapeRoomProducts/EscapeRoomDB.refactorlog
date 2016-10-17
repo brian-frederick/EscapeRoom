@@ -14,4 +14,46 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="BasketID" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9681843a-c7c2-4162-af66-2402d781f873" ChangeDateTime="10/14/2016 02:32:29">
+    <Property Name="ElementName" Value="[dbo].[Session].[ID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Session]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="73b921f6-ac52-4b5a-b64f-94e2eeb60239" ChangeDateTime="10/14/2016 02:32:31">
+    <Property Name="ElementName" Value="[dbo].[Session].[Start]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Session]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="start" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e9681b49-3147-4d37-844e-c0261b08d605" ChangeDateTime="10/14/2016 02:32:38">
+    <Property Name="ElementName" Value="[dbo].[Session].[Price]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Session]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="price" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="29f62c7a-7d61-4275-b737-be8974944daf" ChangeDateTime="10/14/2016 02:32:42">
+    <Property Name="ElementName" Value="[dbo].[Session].[SoldOut]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Session]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="soldOut" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f74f218a-a36f-414b-8e7b-b53dcccb8371" ChangeDateTime="10/14/2016 02:32:45">
+    <Property Name="ElementName" Value="[dbo].[Session].[Title]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Session]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="title" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="afb2f599-ea8d-48c9-b077-e9aefe437337" ChangeDateTime="10/14/2016 02:32:48">
+    <Property Name="ElementName" Value="[dbo].[Session].[Color]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Session]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="color" />
+  </Operation>
 </Operations>

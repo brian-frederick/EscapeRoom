@@ -127,9 +127,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\controlPanel325x379.jpg" />
     <Content Include="Content\Images\defendersBannerToScale.jpg" />
+    <Content Include="Content\Images\engWall375x200.jpg" />
+    <Content Include="Content\Images\subsurfaceScaled.jpg" />
     <Content Include="Content\Images\switchBoardFullToScale.jpg" />
     <Content Include="Content\Images\timeIsRunningOutToScale.jpg" />
+    <Content Include="Content\Index.css" />
     <Content Include="Models\EscapeRoomDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EscapeRoomDBModel.edmx</DependentUpon>
@@ -175,6 +179,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Games\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -335,6 +340,7 @@
     <Compile Include="Controllers\GamesAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Controllers\ShowsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
