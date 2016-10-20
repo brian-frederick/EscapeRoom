@@ -12,6 +12,8 @@ namespace EscapeRoom.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class EscapeRoomDBEntities : DbContext
     {
@@ -31,5 +33,18 @@ namespace EscapeRoom.Models
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<Session> Sessions { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
+        public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
+        public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
+        public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
+    
+        public virtual ObjectResult<sp_getShows_Result> sp_getShows(string gamename)
+        {
+            var gamenameParameter = gamename != null ?
+                new ObjectParameter("gamename", gamename) :
+                new ObjectParameter("gamename", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getShows_Result>("sp_getShows", gamenameParameter);
+        }
     }
 }

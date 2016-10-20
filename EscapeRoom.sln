@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscapeRoom", "EscapeRoom\Es
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EscapeRoomDB", "EscapeRoomProducts\EscapeRoomDB.sqlproj", "{B5858329-ED94-416E-9D7F-01F1403F85EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscapeRoomTests", "EscapeRoomTests\EscapeRoomTests.csproj", "{CA6C02C9-6089-44B9-A71D-46E3F0E71FD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{B5858329-ED94-416E-9D7F-01F1403F85EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5858329-ED94-416E-9D7F-01F1403F85EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B5858329-ED94-416E-9D7F-01F1403F85EE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CA6C02C9-6089-44B9-A71D-46E3F0E71FD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6C02C9-6089-44B9-A71D-46E3F0E71FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA6C02C9-6089-44B9-A71D-46E3F0E71FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA6C02C9-6089-44B9-A71D-46E3F0E71FD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

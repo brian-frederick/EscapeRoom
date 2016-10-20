@@ -1,10 +1,11 @@
-﻿CREATE TABLE [dbo].[Game]
-(
-	[Title] nvarchar(50) NOT NULL ,
-	[Description] nvarchar(1000) Null, 
-	[Capacity] int Not Null, 
-	[Length] int Not Null,
-	[RunStart] datetime Not Null,
-	[RunEnd] datetime Not Null, 
-    CONSTRAINT [PK_Game] PRIMARY KEY ([Title])
-)
+﻿CREATE TABLE [dbo].[Game] (
+    [Title]       NVARCHAR (50)   NOT NULL,
+    [Description] NVARCHAR (1000) NULL,
+    [Capacity]    INT             NOT NULL,
+    [Length]      INT             NOT NULL,
+    [RunStart]    DATETIME        NOT NULL,
+    [RunEnd]      DATETIME        NOT NULL,
+    CONSTRAINT [PK_Game] PRIMARY KEY CLUSTERED ([Title] ASC)
+);
+
+

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EscapeRoom.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -12,18 +13,40 @@ namespace EscapeRoom.Controllers
         // GET: CheckOut
         public ActionResult Index()
         {
-            ViewBag.Message = "This is what it is about.";
-            return View();
+            
+            CheckOut model = new CheckOut();
+            int availableSpots = 0;
+            using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
+            {
+                
+            }
+
+            model.Players = new Player[availableSpots];
+            for (int i = 0; i < availableSpots; i++)
+            {
+                model.Players[i] = new Player();
+            }
+            return View(model);
         }
 
         //POST: CheckOut
         [HttpPost]
-        public ActionResult Index(Models.CheckOut model)
+        public ActionResult Index(SessionModel model)
         {
             //TO DO: Add Product to cart in Database!
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Reciept");
+                using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
+                {
+                    var basket = entities.Baskets.Single(x => x.ID == 1); //TODO: this is not correct!
+                    foreach (var player in model.Players.Where(x => !string.IsNullOrEmpty(x.Email)))
+                    {
+                        basket.Players.Add(player);
+                    }
+                    entities.SaveChanges();
+                    //basket.Players.Add(new Player {  })
+                }
+                    return RedirectToAction("Index", "Reciept");
                 string clientID = ConfigurationManager.AppSettings["Braintree.ClientID"];
                 string privateKey = ConfigurationManager.AppSettings["Braintree.PrivateKey"];
                 string publicKey = ConfigurationManager.AppSettings["Braintree.PublicKey"];
@@ -54,13 +77,13 @@ namespace EscapeRoom.Controllers
                 };
 
                 var result = gateway.Customer.Create(request);
-                Braintree.TransactionRequest request2 = new Braintree.TransactionRequest()
-                {
-                    Amount = model.subtotal,
-                    CustomerID = "", //TODO: Get the Ids form the first request
-                    BillingAddressID = "",
-                    PaymentMethodToken = ""
-                };
+                //Braintree.TransactionRequest request2 = new Braintree.TransactionRequest()
+                //{
+                //    Amount = model.subtotal,
+                //    CustomerID = "", //TODO: Get the Ids form the first request
+                //    BillingAddressID = "",
+                //    PaymentMethodToken = ""
+                //};
                 gateway.Customer.Create(request);
                 return RedirectToAction("Index", "Reciept");
             }
@@ -69,7 +92,8 @@ namespace EscapeRoom.Controllers
             {
                 
                 return View(model);
-            }            
+            } */
+            return View(model);
         }
 
         public ActionResult About()
@@ -78,5 +102,39 @@ namespace EscapeRoom.Controllers
 
             return View();
         }
+
+        public ActionResult Selection(int id)
+        {
+            using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
+            {
+
+                Session session = entities.Sessions.Single(x => x.Id == id);
+                SessionModel model = new SessionModel
+                {
+                    Id = session.Id,
+                    Color = session.Color,
+                    InventoryList = new List<int>(),
+                    Price = session.Price,
+                    Start = session.Start,
+                    Title = session.Title
+                };
+
+                model.Inventory = session.Game.Capacity - session.Baskets.Sum(x => x.Players.Count());
+
+                for (int i = 1; i <= model.Inventory; i++)
+                    {
+                    model.InventoryList.Add(i);
+                    }
+
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Selection(SessionModel model)
+        {
+            return RedirectToAction("Index", "CheckOut", model);
+        }
+
     }
 }

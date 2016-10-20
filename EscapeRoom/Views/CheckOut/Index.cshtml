@@ -1,4 +1,5 @@
-﻿@model EscapeRoom.Models.CheckOut
+﻿@model EscapeRoom.Models.SessionModel
+
 @{
     ViewBag.Title = "CheckOut";
 }
@@ -6,16 +7,15 @@
 <h2>Check Out</h2>
 <div class="row">
     <div class="col-sm-3">
-        <h2>The Last Defender</h2>
-        <h4>Thursday, Oct 15th</h4>
-        <h4>7:30pm</h4>
-        <p>$50.00</p>
-        @ViewBag.Message
+        <h2>@Model.Title</h2>
+        <h4>@Model.Start</h4>        
+        <p>>@string.Format("{0:C}", Model.Price)</p>
+        <p>@Model.OrderQty players</p>
     </div>
 
     
 
-    @using (Html.BeginForm())
+ @*   @using (Html.BeginForm())
     {
         
         <form class="form-inline">            
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="Email">Email Address</label> <br />
                             @Html.TextBoxFor(m => Model.Email, new { id = "Email", type = "email", @class = "form-control", required = "required" }) <br />
-                            @*@Html.ValidationMessageFor(m => m.Email)*@
+                            @Html.ValidationMessageFor(m => m.Email)
                         </div>
                     </div>
 
@@ -68,17 +68,17 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="City">City</label> <br />
-                        @Html.TextBoxFor(m => Model.City, new { id = "City", @class = "form-control", required = "required" }) <br />
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="City">City</label> <br />
+                            @Html.TextBoxFor(m => Model.City, new { id = "City", @class = "form-control", required = "required" }) <br />
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label for="State">State</label> <br />
-                        @Html.DropDownListFor(m => Model.State, new SelectList(
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="State">State</label> <br />
+                            @Html.DropDownListFor(m => Model.State, new SelectList(
                     new List<object> {
                        new { value="AK", text = "AK" },
                        new { value="AL", text = "AL" },
@@ -132,39 +132,47 @@
                        new { value="WV", text = "WV" },
                        new { value="WY", text = "WY" },
                         }, "value", "text", new { id = "state", @class = "form-control", required = "required" }))
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-sm-3">
-                    <div class="Zip">
-                        <label for="Zip">Zip Code</label> <br />
-                        @Html.TextBoxFor(m => Model.Zip, new { id = "Zip", type = "number", @class = "form-control", required = "required" }) <br />
+                    <div class="col-sm-3">
+                        <div class="Zip">
+                            <label for="Zip">Zip Code</label> <br />
+                            @Html.TextBoxFor(m => Model.Zip, new { id = "Zip", type = "number", @class = "form-control", required = "required" }) <br />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="CreditCard">Credit Card</label> 
-                        @Html.TextBoxFor(m => Model.CreditCard, new { id = "CreditCard", type="text", @class = "form-control" })
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="CreditCard">Credit Card</label>
+                            @Html.TextBoxFor(m => Model.CreditCard, new { id = "CreditCard", type = "text", @class = "form-control" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label for="Expiration">Exp</label> 
-                        @Html.TextBoxFor(m => Model.Expiration, new { id = "Expiration", type = "text", @class = "form-control",}) 
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="Expiration">Exp</label>
+                            @Html.TextBoxFor(m => Model.Expiration, new { id = "Expiration", type = "text", @class = "form-control", })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="SecCode">Sec</label>
+                            @Html.TextBoxFor(m => Model.SecCode, new { id = "SecCode", type = "number", @class = "form-control" })
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label for="SecCode">Sec</label> 
-                        @Html.TextBoxFor(m => Model.SecCode, new { id = "SecCode", type = "number", @class = "form-control" }) 
+                @for (int i = 0; i < Model.Players.Length; i++)
+                {
+                    <div>
+                        @Html.TextBoxFor(m => m.Players[i].Email)
+                        @Html.TextBoxFor(m => m.Players[i].FirstName)
+                        @Html.TextBoxFor(m => m.Players[i].LastName)
                     </div>
-                </div>
-            </div>
 
+                }
                 <div class="col-md-3">
                     <div class="form-group">
                         <button class="btn btn-danger form-control">submit</button>
@@ -176,4 +184,4 @@
     }
 </div>
 
-
+*@

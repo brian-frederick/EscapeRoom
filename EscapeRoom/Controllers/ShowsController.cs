@@ -13,15 +13,18 @@ namespace EscapeRoom.Controllers
         public ActionResult Index(string showName)
         {
             //TODO: Get Parameter from url
-            showName = "The Last Defender";
+            
 
             using (EscapeRoomDBEntities entity = new Models.EscapeRoomDBEntities())
             {
-                //Game chosenGame = sp_getShows();
-                //var gameSelection = entity.;
+                
+                Game model = entity.Games.Single(x => x.Title == showName);
+
+                return View(model);
+
             }
 
-            return View();   
+          
         }
     }
 }

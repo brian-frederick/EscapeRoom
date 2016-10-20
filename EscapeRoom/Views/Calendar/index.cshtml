@@ -1,10 +1,55 @@
-﻿
+﻿@model EscapeRoom.Models.CalendarSearchModel
+
 @{
     ViewBag.Title = "index";
     ViewBag.Banner = "../Content/Images/switchBoardFullToScale.jpg";
+
 }
 
-<h2>Calendar</h2>
+<div class="row">
+    <div class="col-sm-2">
+        <h3>Search </h3>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
 
-<button id="calView">change to list</button>
-<div id="calendar"></div>
+            @Html.DropDownListFor(m => m.game, new SelectList(Model.games), "")
+
+            <Input type="submit" onclick="GetCal()" value="search" class="btn btn-primary" />
+        }
+    </div>
+
+    <div class="col-lg-9">
+            <h2>Calendar</h2>
+            <button id="calView">change to list</button>
+            <div id="calendar"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            var calView = "month";
+            var url = "/calendar/data?showName=" + $('#game').val();
+            $.getJSON(url, function (data) {
+                $("#calendar").fullCalendar({
+                    events: data,
+                    eventRender: function (event, element) {
+                        element.find('.fc-title').append("(" + event.inventory + ")");
+                }
+            });
+        });
+
+            $("#calView").on("click", function () {
+                if (calView === "listMonth") {
+                    $("#calendar").fullCalendar("changeView", "month");
+                    calView = "month";
+                }
+                else {
+                    $("#calendar").fullCalendar("changeView", "listMonth");
+                    calView = "listMonth";
+                }
+            });
+        });
+    </script>
+}

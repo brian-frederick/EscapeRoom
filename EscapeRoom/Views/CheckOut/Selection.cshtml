@@ -1,0 +1,22 @@
+﻿@model EscapeRoom.Models.SessionModel
+
+@{
+    ViewBag.Title = "Selection";
+}
+
+
+<h1>@Model.Title</h1>
+<h2>@Model.Start</h2>
+<p>@string.Format("{0:C}", Model.Price) per participant.</p>
+<p>Up to @Model.Inventory tickets are available for this time. How many would you like to purchase?</p>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    @Html.DropDownListFor(m => m.OrderQty, new SelectList(Model.InventoryList), "")
+
+    <Input type="submit"  value="search" class="btn btn-primary" />
+}
+
+

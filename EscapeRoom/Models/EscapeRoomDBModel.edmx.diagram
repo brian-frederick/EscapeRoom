@@ -17,6 +17,11 @@
         <AssociationConnector Association="EscapeRoomDBModel.FK_PaymentInfo_ToUser" />
         <AssociationConnector Association="EscapeRoomDBModel.BasketPaymentInfo" />
         <AssociationConnector Association="EscapeRoomDBModel.BasketPlayers" />
+        <EntityTypeShape EntityType="EscapeRoomDBModel.C__RefactorLog" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EscapeRoomDBModel.webpages_Membership" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EscapeRoomDBModel.webpages_OAuthMembership" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="EscapeRoomDBModel.webpages_Roles" Width="1.5" PointX="0.75" PointY="11.375" />
+        <AssociationConnector Association="EscapeRoomDBModel.webpages_UsersInRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
