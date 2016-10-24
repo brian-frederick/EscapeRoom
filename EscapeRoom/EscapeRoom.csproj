@@ -157,6 +157,7 @@
       <DependentUpon>EscapeRoomDBModel.edmx</DependentUpon>
       <LastGenOutput>EscapeRoomDBModel.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\EscapeRoomDBModel.edmx.sql" />
     <Content Include="Models\EscapeRoomDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EscapeRoomDBModel.edmx</DependentUpon>
@@ -169,7 +170,7 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\jquery-1.11.3.min.map" />
     <Content Include="Views\Calendar\index.cshtml" />
-    <Content Include="Views\CheckOut\Index.cshtml" />
+    <Content Include="Views\CheckOut\Payment.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -201,6 +202,7 @@
     <Content Include="Views\Account\RegisterComplete.cshtml" />
     <Content Include="Views\Account\RegisterConfirm.cshtml" />
     <Content Include="Views\CheckOut\Selection.cshtml" />
+    <Content Include="Views\CheckOut\Success.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -365,9 +367,6 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Models\AddressService.cs" />
     <Compile Include="Models\CalendarSearchModel.cs" />
-    <Compile Include="Models\C__RefactorLog.cs">
-      <DependentUpon>EscapeRoomDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Controllers\ShowsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -412,15 +411,6 @@
       <DependentUpon>EscapeRoomDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>EscapeRoomDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\webpages_Membership.cs">
-      <DependentUpon>EscapeRoomDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\webpages_OAuthMembership.cs">
-      <DependentUpon>EscapeRoomDBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\webpages_Roles.cs">
       <DependentUpon>EscapeRoomDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

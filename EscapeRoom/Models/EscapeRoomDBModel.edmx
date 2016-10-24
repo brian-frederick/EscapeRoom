@@ -5,19 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EscapeRoomDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__RefactorLog">
-          <Key>
-            <PropertyRef Name="OperationKey" />
-          </Key>
-          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
-        </EntityType>
         <EntityType Name="Basket">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SessionID" Type="int" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" />
         </EntityType>
         <EntityType Name="BasketPaymentInfo">
           <Key>
@@ -29,10 +23,10 @@
         </EntityType>
         <EntityType Name="BasketPlayers">
           <Key>
-            <PropertyRef Name="PlayerEmail" />
+            <PropertyRef Name="PlayerId" />
             <PropertyRef Name="BasketID" />
           </Key>
-          <Property Name="PlayerEmail" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
           <Property Name="BasketID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Game">
@@ -40,11 +34,14 @@
             <PropertyRef Name="Title" />
           </Key>
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Tag" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" />
           <Property Name="Capacity" Type="int" Nullable="false" />
-          <Property Name="Length" Type="int" Nullable="false" />
-          <Property Name="RunStart" Type="datetime" Nullable="false" />
-          <Property Name="RunEnd" Type="datetime" Nullable="false" />
+          <Property Name="Length" Type="int" />
+          <Property Name="RunStart" Type="datetime" />
+          <Property Name="RunEnd" Type="datetime" />
+          <Property Name="Banner" Type="nvarchar" MaxLength="500" />
+          <Property Name="Button" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="PaymentInfo">
           <Key>
@@ -66,9 +63,10 @@
         </EntityType>
         <EntityType Name="Player">
           <Key>
-            <PropertyRef Name="Email" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="250" />
           <Property Name="LastName" Type="nvarchar" MaxLength="250" />
           <Property Name="Measurements" Type="nvarchar" MaxLength="250" />
@@ -96,46 +94,6 @@
           <Property Name="Phone" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
-        <EntityType Name="webpages_Membership">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
-          <Property Name="IsConfirmed" Type="bit" />
-          <Property Name="LastPasswordFailureDate" Type="datetime" />
-          <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="PasswordChangedDate" Type="datetime" />
-          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
-          <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="webpages_OAuthMembership">
-          <Key>
-            <PropertyRef Name="Provider" />
-            <PropertyRef Name="ProviderUserId" />
-          </Key>
-          <Property Name="Provider" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="ProviderUserId" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="webpages_Roles">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
-        <EntityType Name="webpages_UsersInRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="RoleId" Type="int" Nullable="false" />
-        </EntityType>
         <Association Name="FK_Basket_ToSession">
           <End Role="Session" Type="Self.Session" Multiplicity="1" />
           <End Role="Basket" Type="Self.Basket" Multiplicity="*" />
@@ -149,7 +107,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Basket_ToUser">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Basket" Type="Self.Basket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -201,10 +159,10 @@
           <End Role="BasketPlayers" Type="Self.BasketPlayers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Player">
-              <PropertyRef Name="Email" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="BasketPlayers">
-              <PropertyRef Name="PlayerEmail" />
+              <PropertyRef Name="PlayerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -220,18 +178,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_RoleId">
-          <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
-          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="webpages_Roles">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="webpages_UsersInRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Session_ToGame">
           <End Role="Game" Type="Self.Game" Multiplicity="0..1" />
           <End Role="Session" Type="Self.Session" Multiplicity="*" />
@@ -244,23 +190,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_UserId">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="webpages_UsersInRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="sp_basketPlayers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="basketid" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_getShows" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="gamename" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="EscapeRoomDBModelStoreContainer">
-          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Basket" EntityType="Self.Basket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BasketPaymentInfo" EntityType="Self.BasketPaymentInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BasketPlayers" EntityType="Self.BasketPlayers" Schema="dbo" store:Type="Tables" />
@@ -269,10 +205,6 @@
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Basket_ToSession" Association="Self.FK_Basket_ToSession">
             <End Role="Session" EntitySet="Session" />
             <End Role="Basket" EntitySet="Basket" />
@@ -301,17 +233,9 @@
             <End Role="User" EntitySet="User" />
             <End Role="PaymentInfo" EntitySet="PaymentInfo" />
           </AssociationSet>
-          <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
-            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
-            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
-          </AssociationSet>
           <AssociationSet Name="FK_Session_ToGame" Association="Self.FK_Session_ToGame">
             <End Role="Game" EntitySet="Game" />
             <End Role="Session" EntitySet="Session" />
-          </AssociationSet>
-          <AssociationSet Name="fk_UserId" Association="Self.fk_UserId">
-            <End Role="User" EntitySet="User" />
-            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -319,6 +243,9 @@
     <edmx:ConceptualModels>
       <Schema Namespace="EscapeRoomDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="EscapeRoomDBEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_getShows" ReturnType="Collection(EscapeRoomDBModel.sp_getShows_Result)">
+          <Parameter Name="gamename" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="Baskets" EntityType="EscapeRoomDBModel.Basket" />
           <EntitySet Name="Games" EntityType="EscapeRoomDBModel.Game" />
           <EntitySet Name="PaymentInfoes" EntityType="EscapeRoomDBModel.PaymentInfo" />
@@ -349,25 +276,25 @@
             <End Role="Basket" EntitySet="Baskets" />
             <End Role="Player" EntitySet="Players" />
           </AssociationSet>
-          <EntitySet Name="C__RefactorLog" EntityType="EscapeRoomDBModel.C__RefactorLog" />
-          <EntitySet Name="webpages_Membership" EntityType="EscapeRoomDBModel.webpages_Membership" />
-          <EntitySet Name="webpages_OAuthMembership" EntityType="EscapeRoomDBModel.webpages_OAuthMembership" />
-          <EntitySet Name="webpages_Roles" EntityType="EscapeRoomDBModel.webpages_Roles" />
-          <AssociationSet Name="webpages_UsersInRoles" Association="EscapeRoomDBModel.webpages_UsersInRoles">
-            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <FunctionImport Name="sp_getShows" ReturnType="Collection(EscapeRoomDBModel.sp_getShows_Result)">
-            <Parameter Name="gamename" Mode="In" Type="String" />
+          <FunctionImport Name="sp_basketPlayers" ReturnType="Collection(Int32)">
+          <Parameter Name="basketid" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_getShows_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
+          <Property Type="Int32" Name="Capacity" Nullable="false" />
+          <Property Type="Int32" Name="Length" Nullable="false" />
+          <Property Type="DateTime" Name="RunStart" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="RunEnd" Nullable="false" Precision="23" />
+        </ComplexType>
         <EntityType Name="Basket">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SessionID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
           <NavigationProperty Name="Session" Relationship="EscapeRoomDBModel.FK_Basket_ToSession" FromRole="Basket" ToRole="Session" />
           <NavigationProperty Name="User" Relationship="EscapeRoomDBModel.FK_Basket_ToUser" FromRole="Basket" ToRole="User" />
           <NavigationProperty Name="PaymentInfoes" Relationship="EscapeRoomDBModel.BasketPaymentInfo" FromRole="Basket" ToRole="PaymentInfo" />
@@ -378,12 +305,15 @@
             <PropertyRef Name="Title" />
           </Key>
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Tag" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="Capacity" Type="Int32" Nullable="false" />
-          <Property Name="Length" Type="Int32" Nullable="false" />
-          <Property Name="RunStart" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RunEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="RunStart" Type="DateTime" Precision="3" />
+          <Property Name="RunEnd" Type="DateTime" Precision="3" />
+          <Property Name="Banner" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Sessions" Relationship="EscapeRoomDBModel.FK_Session_ToGame" FromRole="Game" ToRole="Session" />
+          <Property Name="Button" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="PaymentInfo">
           <Key>
@@ -407,9 +337,10 @@
         </EntityType>
         <EntityType Name="Player">
           <Key>
-            <PropertyRef Name="Email" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Measurements" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -441,7 +372,6 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Baskets" Relationship="EscapeRoomDBModel.FK_Basket_ToUser" FromRole="User" ToRole="Basket" />
           <NavigationProperty Name="PaymentInfoes" Relationship="EscapeRoomDBModel.FK_PaymentInfo_ToUser" FromRole="User" ToRole="PaymentInfo" />
-          <NavigationProperty Name="webpages_Roles" Relationship="EscapeRoomDBModel.webpages_UsersInRoles" FromRole="User" ToRole="webpages_Roles" />
         </EntityType>
         <Association Name="FK_Basket_ToSession">
           <End Type="EscapeRoomDBModel.Session" Role="Session" Multiplicity="1" />
@@ -456,7 +386,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Basket_ToUser">
-          <End Type="EscapeRoomDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="EscapeRoomDBModel.User" Role="User" Multiplicity="0..1" />
           <End Type="EscapeRoomDBModel.Basket" Role="Basket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -499,63 +429,24 @@
           <End Type="EscapeRoomDBModel.Basket" Role="Basket" Multiplicity="*" />
           <End Type="EscapeRoomDBModel.Player" Role="Player" Multiplicity="*" />
         </Association>
-        <EntityType Name="C__RefactorLog">
-          <Key>
-            <PropertyRef Name="OperationKey" />
-          </Key>
-          <Property Name="OperationKey" Type="Guid" Nullable="false" />
-        </EntityType>
-        <EntityType Name="webpages_Membership">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IsConfirmed" Type="Boolean" />
-          <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
-          <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
-          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="webpages_OAuthMembership">
-          <Key>
-            <PropertyRef Name="Provider" />
-            <PropertyRef Name="ProviderUserId" />
-          </Key>
-          <Property Name="Provider" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="ProviderUserId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="webpages_Roles">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="EscapeRoomDBModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="User" />
-        </EntityType>
-        <Association Name="webpages_UsersInRoles">
-          <End Type="EscapeRoomDBModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
-          <End Type="EscapeRoomDBModel.User" Role="User" Multiplicity="*" />
-        </Association>
-        <ComplexType Name="sp_getShows_Result">
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
-          <Property Type="Int32" Name="Capacity" Nullable="false" />
-          <Property Type="Int32" Name="Length" Nullable="false" />
-          <Property Type="DateTime" Name="RunStart" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="RunEnd" Nullable="false" Precision="23" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EscapeRoomDBModelStoreContainer" CdmEntityContainer="EscapeRoomDBEntities">
+          <FunctionImportMapping FunctionImportName="sp_getShows" FunctionName="EscapeRoomDBModel.Store.sp_getShows">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EscapeRoomDBModel.sp_getShows_Result">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="RunStart" ColumnName="RunStart" />
+                <ScalarProperty Name="RunEnd" ColumnName="RunEnd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Baskets">
             <EntityTypeMapping TypeName="EscapeRoomDBModel.Basket">
               <MappingFragment StoreEntitySet="Basket">
@@ -568,11 +459,14 @@
           <EntitySetMapping Name="Games">
             <EntityTypeMapping TypeName="EscapeRoomDBModel.Game">
               <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="Button" ColumnName="Button" />
+                <ScalarProperty Name="Banner" ColumnName="Banner" />
                 <ScalarProperty Name="RunEnd" ColumnName="RunEnd" />
                 <ScalarProperty Name="RunStart" ColumnName="RunStart" />
                 <ScalarProperty Name="Length" ColumnName="Length" />
                 <ScalarProperty Name="Capacity" ColumnName="Capacity" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -604,6 +498,7 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -641,73 +536,13 @@
           </AssociationSetMapping>
           <AssociationSetMapping Name="BasketPlayers" TypeName="EscapeRoomDBModel.BasketPlayers" StoreEntitySet="BasketPlayers">
             <EndProperty Name="Player">
-              <ScalarProperty Name="Email" ColumnName="PlayerEmail" />
+              <ScalarProperty Name="Id" ColumnName="PlayerId" />
             </EndProperty>
             <EndProperty Name="Basket">
               <ScalarProperty Name="ID" ColumnName="BasketID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="C__RefactorLog">
-            <EntityTypeMapping TypeName="EscapeRoomDBModel.C__RefactorLog">
-              <MappingFragment StoreEntitySet="__RefactorLog">
-                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="webpages_Membership">
-            <EntityTypeMapping TypeName="EscapeRoomDBModel.webpages_Membership">
-              <MappingFragment StoreEntitySet="webpages_Membership">
-                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
-                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
-                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
-                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
-                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
-                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
-                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="webpages_OAuthMembership">
-            <EntityTypeMapping TypeName="EscapeRoomDBModel.webpages_OAuthMembership">
-              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
-                <ScalarProperty Name="Provider" ColumnName="Provider" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="webpages_Roles">
-            <EntityTypeMapping TypeName="EscapeRoomDBModel.webpages_Roles">
-              <MappingFragment StoreEntitySet="webpages_Roles">
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="EscapeRoomDBModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
-            <EndProperty Name="User">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="webpages_Roles">
-              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_getShows" FunctionName="EscapeRoomDBModel.Store.sp_getShows">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="EscapeRoomDBModel.sp_getShows_Result">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
-                <ScalarProperty Name="Length" ColumnName="Length" />
-                <ScalarProperty Name="RunStart" ColumnName="RunStart" />
-                <ScalarProperty Name="RunEnd" ColumnName="RunEnd" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_basketPlayers" FunctionName="EscapeRoomDBModel.Store.sp_basketPlayers" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

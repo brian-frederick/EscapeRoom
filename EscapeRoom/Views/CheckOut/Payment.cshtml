@@ -1,4 +1,4 @@
-﻿@model EscapeRoom.Models.SessionModel
+﻿@model EscapeRoom.Models.CheckOut
 
 @{
     ViewBag.Title = "CheckOut";
@@ -7,18 +7,19 @@
 <h2>Check Out</h2>
 <div class="row">
     <div class="col-sm-3">
-        <h2>@Model.Title</h2>
-        <h4>@Model.Start</h4>        
-        <p>>@string.Format("{0:C}", Model.Price)</p>
-        <p>@Model.OrderQty players</p>
+        <h2>@Model.session.Title</h2>
+        <h4>@Model.session.Start</h4>        
+        <p>@string.Format("{0:C}", @Model.session.Price)</p>
+        <p>@Model.numPlayers players</p>
+        <em>@string.Format("{0:C}", @Model.session.Price * @Model.numPlayers) Total</em>
     </div>
 
     
 
- @*   @using (Html.BeginForm())
+ @using (Html.BeginForm())
     {
         
-        <form class="form-inline">            
+        <form class="form-inline" >            
             <fieldset>
                 <legend>Purchase Tickets Now</legend>
                 @Html.ValidationSummary(false)
@@ -52,6 +53,7 @@
                         </div>
                     </div>
                 </div>
+               
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
@@ -164,15 +166,7 @@
                         </div>
                     </div>
                 </div>
-                @for (int i = 0; i < Model.Players.Length; i++)
-                {
-                    <div>
-                        @Html.TextBoxFor(m => m.Players[i].Email)
-                        @Html.TextBoxFor(m => m.Players[i].FirstName)
-                        @Html.TextBoxFor(m => m.Players[i].LastName)
-                    </div>
-
-                }
+                
                 <div class="col-md-3">
                     <div class="form-group">
                         <button class="btn btn-danger form-control">submit</button>
@@ -183,5 +177,3 @@
 
     }
 </div>
-
-*@

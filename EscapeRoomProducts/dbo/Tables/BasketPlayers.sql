@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[BasketPlayers]
 (
-	[PlayerEmail] NVARCHAR(250) NOT NULL, 
+	[PlayerId] Int NOT NULL, 
     [BasketID] INT NOT NULL, 
-    CONSTRAINT [PK_BasketPlayers] PRIMARY KEY ([PlayerEmail], [BasketID]), 
+    CONSTRAINT [PK_BasketPlayers] PRIMARY KEY ([PlayerId], [BasketID]), 
     CONSTRAINT [FK_BasketPlayers_Basket] FOREIGN KEY (BasketID) REFERENCES Basket(ID), 
-    CONSTRAINT [FK_BasketPlayers_Player] FOREIGN KEY (PlayerEmail) REFERENCES Player(Email) 
+    CONSTRAINT [FK_BasketPlayers_Player] FOREIGN KEY (PlayerId) REFERENCES Player(Id) 
 )

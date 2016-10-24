@@ -20,6 +20,9 @@ namespace EscapeRoom.Models
         public string CreditCard { get; set; }
         public DateTime Expiration { get; set;}
         public int SecCode { get; set; }
+        public int numPlayers { get; set; }
         public Player[] Players { get; set; }
+        public Session session { get; set; }
+        public Session sessionID { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EscapeRoom.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,10 +12,16 @@ namespace EscapeRoom.Controllers
     {
         public ActionResult Index()
         {
-           
-            return View();
-            
-            
+            List<Game> model = new List<Game>();
+            using (EscapeRoomDBEntities entity = new EscapeRoomDBEntities())
+            {
+                
+                model = entity.Games.ToList();
+
+            }
+
+            return View(model);
+        
         }
 
         public ActionResult About()

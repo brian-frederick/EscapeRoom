@@ -13,7 +13,8 @@
         {
             @Html.ValidationSummary(true)
 
-            @Html.DropDownListFor(m => m.game, new SelectList(Model.games), "")
+            <label for="Game">Games</label> <br />
+            @Html.DropDownListFor(m => m.game, new SelectList(Model.games), "All")
 
             <Input type="submit" onclick="GetCal()" value="search" class="btn btn-primary" />
         }

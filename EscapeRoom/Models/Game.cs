@@ -21,11 +21,14 @@ namespace EscapeRoom.Models
         }
     
         public string Title { get; set; }
+        public string Tag { get; set; }
         public string Description { get; set; }
         public int Capacity { get; set; }
-        public int Length { get; set; }
-        public System.DateTime RunStart { get; set; }
-        public System.DateTime RunEnd { get; set; }
+        public Nullable<int> Length { get; set; }
+        public Nullable<System.DateTime> RunStart { get; set; }
+        public Nullable<System.DateTime> RunEnd { get; set; }
+        public string Banner { get; set; }
+        public string Button { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Session> Sessions { get; set; }

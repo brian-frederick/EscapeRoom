@@ -40,7 +40,7 @@ namespace EscapeRoom.Controllers
                         Color = x.Color,
                         Start = x.Start,
                         Url = "Checkout/Selection/" + x.Id,
-                        Inventory = x.Baskets.Any() ? x.Game.Capacity - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity
+                        Inventory = x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity
                     }).ToList();
 
                 }
@@ -52,7 +52,7 @@ namespace EscapeRoom.Controllers
                         Title = x.Title,
                         Color = x.Color,
                         Start = x.Start,
-                        //Inventory = x.Game.Capacity - x.Baskets.Sum(y => y.Players.Count()),
+                        Inventory = x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity,
                         Url = "Checkout/Selection/" + x.Id
                     }).ToList();
                 }

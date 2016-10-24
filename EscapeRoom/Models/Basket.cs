@@ -23,7 +23,7 @@ namespace EscapeRoom.Models
     
         public int ID { get; set; }
         public int SessionID { get; set; }
-        public int UserID { get; set; }
+        public Nullable<int> UserID { get; set; }
     
         public virtual Session Session { get; set; }
         public virtual User User { get; set; }

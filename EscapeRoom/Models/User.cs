@@ -19,7 +19,6 @@ namespace EscapeRoom.Models
         {
             this.Baskets = new HashSet<Basket>();
             this.PaymentInfoes = new HashSet<PaymentInfo>();
-            this.webpages_Roles = new HashSet<webpages_Roles>();
         }
     
         public int Id { get; set; }
@@ -33,7 +32,5 @@ namespace EscapeRoom.Models
         public virtual ICollection<Basket> Baskets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentInfo> PaymentInfoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
     }
 }

@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - The Last Defender</title>
+    <title>@ViewBag.Title - Chicago Unlocked</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
  
-    <meta name="description" content="The description of my page" />
+    <meta name="Chicago Unlocked" content="The description of my page" />
 </head>
 <body>
     <div class="row">
@@ -19,7 +19,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("THE LAST DEFENDER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Chicago Unlocked", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -39,11 +39,11 @@
             @{
                 if (@ViewBag.Banner == null)
                 {
-                    <img src="~/Content/Images/defendersBannerToScale.jpg" />
+                    <img src="~/Content/Images/defendersBannerToScale.jpg" alt="" />
                 }
                 else
                 {
-                    <img src="@ViewBag.Banner" />
+                    <img src="@ViewBag.Banner" alt="" />
                 }
             }
 

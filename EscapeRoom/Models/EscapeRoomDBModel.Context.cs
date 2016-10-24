@@ -33,10 +33,6 @@ namespace EscapeRoom.Models
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<Session> Sessions { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-        public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
-        public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
-        public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
     
         public virtual ObjectResult<sp_getShows_Result> sp_getShows(string gamename)
         {
@@ -45,6 +41,15 @@ namespace EscapeRoom.Models
                 new ObjectParameter("gamename", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getShows_Result>("sp_getShows", gamenameParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_basketPlayers(Nullable<int> basketid)
+        {
+            var basketidParameter = basketid.HasValue ?
+                new ObjectParameter("basketid", basketid) :
+                new ObjectParameter("basketid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_basketPlayers", basketidParameter);
         }
     }
 }
