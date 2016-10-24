@@ -20,7 +20,11 @@
         @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Password)
     </div>
-    
+
+    /*if (@Model.Email != null)
+    {
+        @Model.Email
+    } */
 
     <Input type="submit" value="Create Account" class="btn btn-primary" />
 }

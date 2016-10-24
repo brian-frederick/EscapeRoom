@@ -20,6 +20,8 @@ namespace EscapeRoom.Controllers
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
                 Basket b = entities.Baskets.Single(x => x.ID == id);
+             
+
                 model.numPlayers = b.Players.Count;
                 model.session = new Models.Session
                 {
@@ -38,8 +40,24 @@ namespace EscapeRoom.Controllers
         [HttpPost]
         public ActionResult Payment(CheckOut model, int? id)
         {
-
             Basket b = new Basket();
+
+            using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
+            {
+                b = entities.Baskets.Single(x => x.ID == id);
+                User user = new Models.User();
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+                user.Phone = model.Phone;
+                user.DateCreated = DateTime.UtcNow;
+                b.User = user;
+                entities.SaveChanges();
+            }
+
+
+
+
 
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
@@ -82,12 +100,15 @@ namespace EscapeRoom.Controllers
                     PostalCode = model.Zip.ToString(),
                     CountryCodeAlpha2 = "US"
                 },
-               
+
                 Options = new Braintree.TransactionOptionsRequest
                 {
-                    SubmitForSettlement = true
+                    SubmitForSettlement = true,
+                    StoreInVault = true
                 },
             };
+
+            
 
             Braintree.Result<Braintree.Transaction> result = gateway.Transaction.Sale(request);
 
@@ -214,104 +235,3 @@ namespace EscapeRoom.Controllers
 
     }
 }
-
-//alternative code
-/*      public ActionResult Payment()
-      {
-
-          CheckOut model = new CheckOut();
-          int availableSpots = 0;
-          using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
-          {
-
-          }
-
-          model.Players = new Player[availableSpots];
-          for (int i = 0; i < availableSpots; i++)
-          {
-              model.Players[i] = new Player();
-          }
-          return View(model);
-      }
-
-      //POST: CheckOut
-      [HttpPost]
-      public ActionResult Payment(SessionModel model)
-      {
-          //TO DO: Add Product to cart in Database!
-          if (ModelState.IsValid)
-          {
-              using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
-              {
-                  var basket = entities.Baskets.Single(x => x.ID == 1); //TODO: this is not correct!
-                  foreach (var player in model.Players.Where(x => !string.IsNullOrEmpty(x.Email)))
-                  {
-                      basket.Players.Add(player);
-                  }
-                  entities.SaveChanges();
-                  //basket.Players.Add(new Player {  })
-              }
-              return RedirectToAction("Index", "Reciept");
-
-
-          else
-          {
-
-              return View(model);
-          } 
-          return View(model);
-      }
-
-      public ActionResult About()
-      {
-
-
-          return View();
-      }
- 
-     Braintree.CustomerRequest request = new Braintree.CustomerRequest
-            {
-              
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Phone = model.Phone,
-                CreditCard = new Braintree.CreditCardRequest
-                {
-                    BillingAddress = new Braintree.CreditCardAddressRequest
-                    {
-                        StreetAddress = model.Address,
-                        ExtendedAddress = model.Unit,
-                        PostalCode = model.Zip.ToString(),
-                        Locality = model.City,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-
-                    },
-                    CardholderName = model.FirstName + " " + model.LastName,
-                    ExpirationDate = model.Expiration.ToString(),
-                    CVV = model.SecCode.ToString(),
-                    Number = model.CreditCard
-                }
-            };
-
-            var result = gateway.Customer.Create(request);
-
-            bool success = result.IsSuccess();
-            string customerId = result.Target.Id;
-
-
-            gateway.PaymentMethod.Create()
-            gateway.PaymentMethodNonce.Create(customerId);
-
-
-            Braintree.TransactionRequest request2 = new Braintree.TransactionRequest()
-            {
-                Amount = model.session.Price * model.numPlayers,
-                CustomerId = customerId,
-                BillingAddressId = "",
-                PaymentMethodToken = ""
-            };
-            gateway.Customer.Create(request);
-
-    */

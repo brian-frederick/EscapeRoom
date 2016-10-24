@@ -3,11 +3,15 @@
 @{
     ViewBag.Title = "index";
     ViewBag.Banner = "../Content/Images/switchBoardFullToScale.jpg";
-
+    List<int> list = new List<int>();
+    for(var i = 0; i < 20; i++)
+    {
+        list.Add(i);
+    }
 }
 
 <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
         <h3>Search </h3>
         @using (Html.BeginForm())
         {
@@ -16,30 +20,38 @@
             <label for="Game">Games</label> <br />
             @Html.DropDownListFor(m => m.game, new SelectList(Model.games), "All")
 
-            <Input type="submit" onclick="GetCal()" value="search" class="btn btn-primary" />
+            @Html.LabelFor(m => m.minInventory)
+
+            
+            @Html.DropDownListFor(m => m.minInventory, new SelectList(list), "# of Tickets" )
+            <input type="date" name="bday">
+
+
+            <input type = "submit" onclick="Search(); return false;" value = "search" class="btn btn-primary" />
         }
     </div>
 
-    <div class="col-lg-9">
-            <h2>Calendar</h2>
-            <button id="calView">change to list</button>
-            <div id="calendar"></div>
+    <div class="col-sm-9">
+        <h2>Calendar</h2>
+        <button id="calView">change to list</button>
+        <div id="calendar"></div>
     </div>
 </div>
 
 @section Scripts{
     <script>
-        $(document).ready(function() {
+        function Search() {
+            
             var calView = "month";
-            var url = "/calendar/data?showName=" + $('#game').val();
+            var url = "/calendar/data?showName=" + $('#game').val() + "&minInventory=" + $('#minInventory').val();
             $.getJSON(url, function (data) {
                 $("#calendar").fullCalendar({
                     events: data,
                     eventRender: function (event, element) {
                         element.find('.fc-title').append("(" + event.inventory + ")");
-                }
+                    }
+                });
             });
-        });
 
             $("#calView").on("click", function () {
                 if (calView === "listMonth") {
@@ -51,6 +63,9 @@
                     calView = "listMonth";
                 }
             });
-        });
+            
+        }
+
+        $(document).ready(Search());
     </script>
 }

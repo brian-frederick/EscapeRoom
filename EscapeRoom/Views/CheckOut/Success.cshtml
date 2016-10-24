@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Success";
+    
 }
 
 <h2>Success!</h2>
@@ -11,35 +12,38 @@
     <div class="col-sm-3">
         <h2>@Model.session.Title</h2>
         <h4>@Model.session.Start</h4>
-        <p>@string.Format("{0:C}", @Model.session.Price)</p>
-        <p>@Model.numPlayers player(s)</p>
+        <p>@string.Format("{0:C}", @Model.session.Price) Per Player(s)</p>
+        <p>@Model.numPlayers Player(s)</p>
         <p>@string.Format("{0:C}", @Model.session.Price * @Model.numPlayers) Total</p>
     </div>
 </div>
 
 
 
-<p> Already have your team assembled? Provide us with their information and we'll contact with information about your game!</p>
 <div class="row">
-    @Html.BeginForm(){ 
+    @using (Html.BeginForm())
+    { 
     <form class="form-inline">
         <fieldset>
-            <legend>Purchase Tickets Now</legend>
+            <legend>Register Your Team!</legend>
             @Html.ValidationSummary(false)
 
             @for (int i = 0; i < Model.Players.Length; i++)
             {
+                <em>Player @(i+1)</em>
                 <div>
-                        <label for="FirstName">First Name</label> <br />
-                        @Html.TextBoxFor(m => m.Players[i].FirstName)
-                        <label for="LastName">Last Name</label> <br />
-                        @Html.TextBoxFor(m => m.Players[i].LastName)
-                        <label for="Email">Email</label> <br />
-                        @Html.TextBoxFor(m => m.Players[i].Email)
+                    <label for="FirstName">First Name</label>
+                    @Html.TextBoxFor(m => m.Players[i].FirstName) <br />
+                    <label for="LastName">Last Name</label>
+                    @Html.TextBoxFor(m => m.Players[i].LastName) <br />
+                    <label for="Email">Email</label>
+                    @Html.TextBoxFor(m => m.Players[i].Email) <br />
+                    <label for="Phone">Phone</label>
+                    @Html.TextBoxFor(m => m.Players[i].Phone) <br />
                 </div>
             }
 
             <Input type="submit" value="submit" class="btn btn-primary" />
-    </form>
+</form>
     }
 </div>

@@ -24,16 +24,17 @@ namespace EscapeRoom.Controllers
             }
         }
 
-        public ActionResult Data(string showName)
+        public ActionResult Data(string showName, string minInventory)
         {
             List<SessionModel> list = null;
+            int minInventoryNum = Convert.ToInt32(minInventory);
 
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
                 
-                if (!string.IsNullOrEmpty(showName))
+                if (!string.IsNullOrEmpty(showName) && !string.IsNullOrEmpty(minInventory))
                 {
-                    list = entities.Sessions.Where(x => x.Title == showName).Select(x => new SessionModel
+                    list = entities.Sessions.Where(x => x.Title == showName && (x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity) >= minInventoryNum).Select(x => new SessionModel
                     {
                         Id = x.Id,
                         Title = x.Title,
@@ -44,7 +45,7 @@ namespace EscapeRoom.Controllers
                     }).ToList();
 
                 }
-                else
+                else if(!string.IsNullOrEmpty(showName) && !string.IsNullOrEmpty(minInventory))
                 {
                     list = entities.Sessions.Select(x => new SessionModel
                     {
