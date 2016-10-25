@@ -20,14 +20,11 @@
             <label for="Game">Games</label> <br />
             @Html.DropDownListFor(m => m.game, new SelectList(Model.games), "All")
 
-            @Html.LabelFor(m => m.minInventory)
-
-            
+            @Html.LabelFor(m => m.minInventory)            
             @Html.DropDownListFor(m => m.minInventory, new SelectList(list), "# of Tickets" )
-            <input type="date" name="bday">
+            
 
-
-            <input type = "submit" onclick="Search(); return false;" value = "search" class="btn btn-primary" />
+            <input type = "submit" onclick="searchButton(); return false;" value = "search" class="btn btn-primary" />
         }
     </div>
 
@@ -40,10 +37,11 @@
 
 @section Scripts{
     <script>
-        function Search() {
+        function makeCal() {
             
             var calView = "month";
-            var url = "/calendar/data?showName=" + $('#game').val() + "&minInventory=" + $('#minInventory').val();
+            var url = "/calendar/data?showName=" + $('#game').val() + "&minInventory=" + $('#minInventory').val(); 
+
             $.getJSON(url, function (data) {
                 $("#calendar").fullCalendar({
                     events: data,
@@ -52,6 +50,7 @@
                     }
                 });
             });
+
 
             $("#calView").on("click", function () {
                 if (calView === "listMonth") {
@@ -64,8 +63,14 @@
                 }
             });
             
+
         }
 
-        $(document).ready(Search());
+        function searchButton() {
+            $("#calendar").fullCalendar("destroy");
+            makeCal();
+        }
+
+        $(document).ready(makeCal());
     </script>
 }

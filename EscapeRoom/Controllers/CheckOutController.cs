@@ -19,9 +19,10 @@ namespace EscapeRoom.Controllers
 
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
-                Basket b = entities.Baskets.Single(x => x.ID == id);
-             
 
+                Basket b = entities.Baskets.Single(x => x.ID == id);
+                
+             
                 model.numPlayers = b.Players.Count;
                 model.session = new Models.Session
                 {
@@ -31,6 +32,14 @@ namespace EscapeRoom.Controllers
                     Start = b.Session.Start
                 };
                 model.Players = b.Players.ToArray();
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    User u = entities.Users.Single(X => X.Email == User.Identity.Name);
+                    model.FirstName = u.FirstName;
+                    model.LastName = u.LastName;
+                    model.Email = u.Email;
+                }
             }
 
 
@@ -44,20 +53,36 @@ namespace EscapeRoom.Controllers
 
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
+                //create basket
                 b = entities.Baskets.Single(x => x.ID == id);
-                User user = new Models.User();
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Email = model.Email;
-                user.Phone = model.Phone;
-                user.DateCreated = DateTime.UtcNow;
-                b.User = user;
-                entities.SaveChanges();
+
+                //if logged in, update record and add basket
+                if (User.Identity.IsAuthenticated)
+                {
+                    User user = entities.Users.Single(X => X.Email == User.Identity.Name);
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Email = model.Email;
+                    user.Phone = model.Phone;
+                    user.DateCreated = DateTime.UtcNow;
+                    b.User = user;
+                    entities.SaveChanges();
+                }
+
+                //if no login, create user and add basket
+                else
+                {
+                    User user = new Models.User();
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Email = model.Email;
+                    user.Phone = model.Phone;
+                    user.DateCreated = DateTime.UtcNow;
+                    b.User = user;
+                    entities.SaveChanges();
+                }
+
             }
-
-
-
-
 
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
@@ -73,7 +98,7 @@ namespace EscapeRoom.Controllers
                 model.Players = b.Players.ToArray();
             }
 
-
+            //configure braintree connection and take payment
             string clientID = ConfigurationManager.AppSettings["Braintree.ClientID"];
             string privateKey = ConfigurationManager.AppSettings["Braintree.PrivateKey"];
             string publicKey = ConfigurationManager.AppSettings["Braintree.PublicKey"];

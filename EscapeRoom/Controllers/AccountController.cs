@@ -64,7 +64,6 @@ namespace EscapeRoom.Controllers
                 }
                 else
                 {
-                    //model.DateCreated = DateTime.UtcNow;
                     string token = WebMatrix.WebData.WebSecurity.CreateUserAndAccount(model.Email, model.Password,
                         new
                         {

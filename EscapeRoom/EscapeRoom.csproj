@@ -203,6 +203,7 @@
     <Content Include="Views\Account\RegisterConfirm.cshtml" />
     <Content Include="Views\CheckOut\Selection.cshtml" />
     <Content Include="Views\CheckOut\Success.cshtml" />
+    <Content Include="Views\WillCall.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -365,6 +366,7 @@
     <Compile Include="Controllers\GamesAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\WillCallController.cs" />
     <Compile Include="Models\AddressService.cs" />
     <Compile Include="Models\CalendarSearchModel.cs" />
     <Compile Include="Models\SessionModel.cs" />
@@ -413,11 +415,13 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>EscapeRoomDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WillCallModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Services\" />
+    <Folder Include="Views\WillCall\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

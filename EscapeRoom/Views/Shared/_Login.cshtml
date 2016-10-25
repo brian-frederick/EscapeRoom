@@ -1,11 +1,16 @@
-﻿<ul class="nav navbar-nav">
+﻿
     @if (User.Identity.IsAuthenticated)
     {
-        <span>Welcome, @User.Identity.Name</span>
-        <span>@Html.ActionLink("Log Out", "logout", "Account")</span>
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Log Out", "logout", "Account")</li>
+        </ul>
+        <p>Welcome, @User.Identity.Name</p>
     }
     else
     {
-        <li>@Html.ActionLink("Login", "login", "Account")</li>
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Register", "Register", "Account")</li>
+            <li>@Html.ActionLink("Login", "login", "Account")</li>
+        </ul>
     }
-</ul>
+    

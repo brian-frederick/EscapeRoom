@@ -45,7 +45,32 @@ namespace EscapeRoom.Controllers
                     }).ToList();
 
                 }
-                else if(!string.IsNullOrEmpty(showName) && !string.IsNullOrEmpty(minInventory))
+                else if(!string.IsNullOrEmpty(showName))
+                {
+                    list = entities.Sessions.Where(x => x.Title == showName).Select(x => new SessionModel
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        Color = x.Color,
+                        Start = x.Start,
+                        Inventory = x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity,
+                        Url = "Checkout/Selection/" + x.Id
+                    }).ToList();
+                }
+
+                else if (!string.IsNullOrEmpty(minInventory))
+                {
+                    list = entities.Sessions.Where(x => minInventoryNum <= (x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity)).Select(x => new SessionModel
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        Color = x.Color,
+                        Start = x.Start,
+                        Inventory = x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity,
+                        Url = "Checkout/Selection/" + x.Id
+                    }).ToList();
+                }
+                else
                 {
                     list = entities.Sessions.Select(x => new SessionModel
                     {
@@ -57,9 +82,8 @@ namespace EscapeRoom.Controllers
                         Url = "Checkout/Selection/" + x.Id
                     }).ToList();
                 }
-
                 //shorten titles by getting first initials
-                foreach(var item in list)
+                foreach (var item in list)
                 {
                     char[] array = item.Title.ToCharArray();
                     List<char> charList = new List<char>();
