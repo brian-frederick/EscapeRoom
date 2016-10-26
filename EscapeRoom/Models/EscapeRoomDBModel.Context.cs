@@ -51,5 +51,23 @@ namespace EscapeRoom.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_basketPlayers", basketidParameter);
         }
+    
+        public virtual ObjectResult<sp_sessionPlayers_Result> sp_sessionPlayers(Nullable<int> paramId)
+        {
+            var paramIdParameter = paramId.HasValue ?
+                new ObjectParameter("paramId", paramId) :
+                new ObjectParameter("paramId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_sessionPlayers_Result>("sp_sessionPlayers", paramIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_willCallPlayers(Nullable<int> paramId)
+        {
+            var paramIdParameter = paramId.HasValue ?
+                new ObjectParameter("paramId", paramId) :
+                new ObjectParameter("paramId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_willCallPlayers", paramIdParameter);
+        }
     }
 }

@@ -7,9 +7,10 @@ namespace EscapeRoom.Models
 {
     public class WillCallModel
     {
-        public List<Session> sessions { get; set; }
-        public Session selection { get; set; }
+        public List<String> stringSessions { get; set; }
+        public String selection { get; set; }
+        public Session session { get; set; }
         public User user { get; set; }
-        public List<Player> players { get; set; }
+        public List<string> players { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿body {
-
+    background-color: #F2F4F4;
 }
 .body-content{
     width:80%;
@@ -13,7 +13,15 @@
     text-align:center;
 }
 
-/*--------Show Page--------------*/
+.btn-primary {
+    background-color: black;    
+}
+.btn-default {
+    background-color:black;
+    color: white;
+}
+
+/*--------Home Page--------------*/
 .leaderboard {
     margin:2em;
     background-color:black;
@@ -27,5 +35,8 @@
 
 .explanation {
     text-align: center;
-    background-color: gray;
+    border-top-color: gray;
+    border-top-style: solid;
 }
+
+

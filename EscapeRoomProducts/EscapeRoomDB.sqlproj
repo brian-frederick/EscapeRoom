@@ -76,6 +76,7 @@
     <Build Include="dbo\Tables\webpages_Membership.sql" />
     <Build Include="dbo\Stored Procedures\sp_getShows.sql" />
     <Build Include="dbo\Stored Procedures\sp_basketPlayers.sql" />
+    <Build Include="dbo\Stored Procedures\sp_willCallPlayers.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Session.sql" />

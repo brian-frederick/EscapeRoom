@@ -42,6 +42,7 @@
           <Property Name="RunEnd" Type="datetime" />
           <Property Name="Banner" Type="nvarchar" MaxLength="500" />
           <Property Name="Button" Type="nchar" MaxLength="10" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PaymentInfo">
           <Key>
@@ -196,6 +197,9 @@
         <Function Name="sp_getShows" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="gamename" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_willCallPlayers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paramId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="EscapeRoomDBModelStoreContainer">
           <EntitySet Name="Basket" EntityType="Self.Basket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BasketPaymentInfo" EntityType="Self.BasketPaymentInfo" Schema="dbo" store:Type="Tables" />
@@ -279,6 +283,12 @@
           <FunctionImport Name="sp_basketPlayers" ReturnType="Collection(Int32)">
           <Parameter Name="basketid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_sessionPlayers" ReturnType="Collection(EscapeRoomDBModel.sp_sessionPlayers_Result)">
+            <Parameter Name="paramId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_willCallPlayers" ReturnType="Collection(Int32)">
+          <Parameter Name="paramId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_getShows_Result">
           <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
@@ -314,6 +324,7 @@
           <Property Name="Banner" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Sessions" Relationship="EscapeRoomDBModel.FK_Session_ToGame" FromRole="Game" ToRole="Session" />
           <Property Name="Button" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PaymentInfo">
           <Key>
@@ -429,6 +440,14 @@
           <End Type="EscapeRoomDBModel.Basket" Role="Basket" Multiplicity="*" />
           <End Type="EscapeRoomDBModel.Player" Role="Player" Multiplicity="*" />
         </Association>
+        <ComplexType Name="sp_sessionPlayers_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Measurements" Nullable="true" MaxLength="250" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -459,6 +478,7 @@
           <EntitySetMapping Name="Games">
             <EntityTypeMapping TypeName="EscapeRoomDBModel.Game">
               <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="Button" ColumnName="Button" />
                 <ScalarProperty Name="Banner" ColumnName="Banner" />
                 <ScalarProperty Name="RunEnd" ColumnName="RunEnd" />
@@ -543,6 +563,7 @@
             </EndProperty>
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="sp_basketPlayers" FunctionName="EscapeRoomDBModel.Store.sp_basketPlayers" />
+          <FunctionImportMapping FunctionImportName="sp_willCallPlayers" FunctionName="EscapeRoomDBModel.Store.sp_willCallPlayers" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

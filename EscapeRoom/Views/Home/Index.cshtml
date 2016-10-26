@@ -7,7 +7,7 @@
 <div class="jumbotron">
     <h1>Chicago Unlocked</h1>
     <p class="lead">Chicago's Premiere company for Escape Rooms. </p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec sodales urna. Nulla a lacus maximus, mattis odio non, dictum arcu. Nunc dignissim mattis tempus. Phasellus ornare tempus sagittis. </p>
+    <p>Escape Rooms are a great opportunity for corporate team building, a family event, a night out with friends, or even a first date. Unlocked Chicago is your best resource for a unique, challenging, and fun experience. Book your tickets now.</p>
     <p><a onclick="location.href='@Url.Action("Index", "Calendar")'" class="btn btn-primary btn-lg">See All Dates &raquo;</a></p>
 
 </div>
@@ -20,15 +20,15 @@
             <img src="~/Content/Images/engWall375x200.jpg" alt="To Engineering!" />
             <h2>@item.Title</h2>
             <em>@item.Tag</em>
-            <p>Now running through @item.RunEnd)</p>
+            <p>Now running through @item.RunEnd</p>
             <p>For up to @item.Capacity Players!</p>
-        <p><a class="btn btn-default" onclick="location.href='@Url.Action("Index", "Shows", new { showName = @item.Title })'">@item.Button &raquo;</a></p>
-    </div>
+            <p><a class="btn btn-default" onclick="location.href='@Url.Action("Index", "Shows", new { showName = @item.Title })'">@item.Button &raquo;</a></p>
+        </div>
     }
 </div>
-<div class="row explanation" >
+<div class="row explanation">
     <h3>What is an Escape Room?</h3>
     <p>
-        An escape room is a physical adventure game in which players are locked in a room and have to use elements of the room to solve a series of puzzles and escape within a set time limit. The games are physical versions of "escape the room" video games. Games are set in a variety of fictional locations, such as prison cells, dungeons and space stations, and are popular as team building exercises. The earliest room was created in 2006, and escape rooms became popular in the United States, Japan, Taiwan, Canada, Israel and mainland China in the 2010s. Permanent escape rooms in fixed locations were first opened in Asia[1] and followed later in North America, Europe, Australia, New Zealand, and South America. Escape rooms are a great activity for a group of friends, a first date, or a corporate team-building exercise. And no one is doing it better than Chicago Unlocked.
+        An escape room is a physical adventure game in which players are locked in a room and have to use elements of the room to solve a series of puzzles and escape within a set time limit. The games are physical versions of "escape the room" video games. Games are set in a variety of fictional locations, such as prison cells, dungeons and space stations, and are popular as team building exercises. The earliest room was created in 2006, and escape rooms became popular in the United States, Japan, Taiwan, Canada, Israel and mainland China in the 2010s. Permanent escape rooms in fixed locations were first opened in Asia and followed later in North America, Europe, Australia, New Zealand, and South America. Escape rooms are a great activity for a group of friends, a first date, or a corporate team-building exercise. And no one is doing it better than Chicago Unlocked.
     </p>
 </div>

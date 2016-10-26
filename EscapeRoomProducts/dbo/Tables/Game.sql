@@ -8,6 +8,7 @@
     [RunEnd]      DATETIME        NULL,
 	[Banner]	NVARCHAR(500)		Null,
     [Button] NCHAR(10) NULL, 
+    [Color] NVARCHAR(50) NULL, 
     CONSTRAINT [PK_Game] PRIMARY KEY CLUSTERED ([Title] ASC)
 );
 
