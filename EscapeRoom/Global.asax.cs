@@ -22,6 +22,8 @@ namespace EscapeRoom
 
             if (!Roles.RoleExists("Administrator"))
                 Roles.CreateRole("Administrator");
+
+            //Roles.AddUserToRole("briandfrederick+20@gmail.com", "Administrator");
         }
     }
 }

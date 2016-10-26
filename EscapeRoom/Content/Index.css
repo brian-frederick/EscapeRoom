@@ -39,4 +39,10 @@
     border-top-style: solid;
 }
 
+/*------------Show Page---------------*/
+.showtitle {
+    margin: 2em;
+    text-align:center;
+}
+
 

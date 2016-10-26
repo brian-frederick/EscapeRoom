@@ -145,9 +145,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\colors375x200.jpg" />
+    <Content Include="Content\Images\controlPanel250x375.jpg" />
     <Content Include="Content\Images\controlPanel325x379.jpg" />
     <Content Include="Content\Images\defendersBannerToScale.jpg" />
     <Content Include="Content\Images\engWall375x200.jpg" />
+    <Content Include="Content\Images\goggles250x375.jpg" />
     <Content Include="Content\Images\subsurfaceScaled.jpg" />
     <Content Include="Content\Images\switchBoardFullToScale.jpg" />
     <Content Include="Content\Images\timeIsRunningOutToScale.jpg" />
@@ -204,6 +207,12 @@
     <Content Include="Views\CheckOut\Selection.cshtml" />
     <Content Include="Views\CheckOut\Success.cshtml" />
     <Content Include="Views\WillCall\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Sessions\Create.cshtml" />
+    <Content Include="Views\Sessions\Delete.cshtml" />
+    <Content Include="Views\Sessions\Details.cshtml" />
+    <Content Include="Views\Sessions\Edit.cshtml" />
+    <Content Include="Views\Sessions\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -361,11 +370,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\CheckOutController.cs" />
     <Compile Include="Controllers\GamesAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SessionsController.cs" />
     <Compile Include="Controllers\WillCallController.cs" />
     <Compile Include="Models\AddressService.cs" />
     <Compile Include="Models\CalendarSearchModel.cs" />
@@ -424,7 +435,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Services\" />
-    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

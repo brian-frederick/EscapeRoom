@@ -28,11 +28,12 @@
                     <li>@Html.ActionLink("About", "Index", "About")</li>
                     @if (User.IsInRole("Administrator"))
                     {
-                        <li>@Html.ActionLink("Product Administration", "Index", "ProductAdmin")</li>
+                        <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                     }
 
                 </ul>
                 @Html.Partial("_Login")
+
             </div>
         </div>
         <div class="image" style="position:relative;">

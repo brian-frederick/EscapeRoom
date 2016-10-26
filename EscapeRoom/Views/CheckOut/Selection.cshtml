@@ -2,11 +2,14 @@
 
 @{
     ViewBag.Title = "Selection";
+
+    string dateFormat = "MMM dd HH:mm tt";
+                           
 }
 
 
 <h1>@Model.Title</h1>
-<h2>@Model.Start</h2>
+<h2>@Model.Start.ToString(dateFormat)</h2>
 <p>@string.Format("{0:C}", Model.Price) per participant.</p>
 <p>Up to @Model.Inventory ticket(s) available. How many would you like to purchase?</p>
 

@@ -20,7 +20,7 @@
             <label for="Game">Games</label> <br />
             @Html.DropDownListFor(m => m.game, new SelectList(Model.games), "All")
 
-            @Html.LabelFor(m => m.minInventory)            
+            <label for="minInventory">Minimum Number of Players</label> <br />
             @Html.DropDownListFor(m => m.minInventory, new SelectList(list), "# of Tickets" )
             
 

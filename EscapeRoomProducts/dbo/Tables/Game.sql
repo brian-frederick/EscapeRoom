@@ -9,6 +9,7 @@
 	[Banner]	NVARCHAR(500)		Null,
     [Button] NCHAR(10) NULL, 
     [Color] NVARCHAR(50) NULL, 
+    [LongPic] NCHAR(500) NULL, 
     CONSTRAINT [PK_Game] PRIMARY KEY CLUSTERED ([Title] ASC)
 );
 

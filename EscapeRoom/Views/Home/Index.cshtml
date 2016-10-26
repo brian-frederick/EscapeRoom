@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Home Page";
+    string dateFormat = "MMM d, yyyy";
 }
 
 <div class="jumbotron">
@@ -17,10 +18,10 @@
     {
 
         <div class="col-md-6 showcase">
-            <img src="~/Content/Images/engWall375x200.jpg" alt="To Engineering!" />
+            <img src="@item.Banner" alt="To Engineering!" />
             <h2>@item.Title</h2>
             <em>@item.Tag</em>
-            <p>Now running through @item.RunEnd</p>
+            <p>Now running through @item.RunEnd.Value.ToString(dateFormat);
             <p>For up to @item.Capacity Players!</p>
             <p><a class="btn btn-default" onclick="location.href='@Url.Action("Index", "Shows", new { showName = @item.Title })'">@item.Button &raquo;</a></p>
         </div>

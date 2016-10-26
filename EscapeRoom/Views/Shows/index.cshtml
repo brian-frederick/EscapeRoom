@@ -2,29 +2,20 @@
 
 
 @{
-    ViewBag.Title = "ShowList";
+
 }
 
 
+<div class="showtitle">
+    <h1>@Model.Title</h1>
+    <p><a onclick="location.href='@Url.Action("Index", "Calendar", new { showName = HttpUtility.UrlEncode(Model.Title) })'" class="btn btn-primary btn-lg">See Dates &raquo;</a></p>
+</div>
 
 <div class="row">
-    <div class="col-lg-2 leaderboard">
-        <h3>Leader Board</h3>
-        <ol>
-            <li>Notorious Nerds</li>
-            <li>St Augustus High School</li>
-            <li>Argo Tea Sales Team</li>
-            <li>House Theatre of Chicago</li>
-            <li>Anonymous Mystery Team</li>
-        </ol>
+    <div class="col-sm-3">
+        <img src="@Model.LongPic" />
     </div>
-
-
-    <div class="col-lg-8 description">
-        <div class="title">
-            <h1>@Model.Title</h1>
-            <p><a onclick="location.href='@Url.Action("Index", "Calendar", new { showName = HttpUtility.UrlEncode(Model.Title) })'" class="btn btn-primary btn-lg">See Dates &raquo;</a></p>
-        </div>
+    <div class="col-lg-8 description">        
         <p>
             running now through July 2017<br>
             Prices from $25 to $50<br>
