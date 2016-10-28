@@ -2,9 +2,9 @@
 
 @{
     ViewBag.Title = "Selection";
+    ViewBag.Banner = "../../Content/Images/arcadeBanner.jpg";
+    string dateFormat = "MMMM dd, hh:mm tt";
 
-    string dateFormat = "MMM dd HH:mm tt";
-                           
 }
 
 
@@ -20,7 +20,7 @@
     <label for="OrderQty">Quantity</label> <br />
     @Html.DropDownListFor(m => m.OrderQty, new SelectList(Model.InventoryList), "")
 
-    <Input type="submit"  value="search" class="btn btn-primary" />
+    <Input type="submit"  value="Get Tickets!" class="btn btn-primary" />
 }
 
 

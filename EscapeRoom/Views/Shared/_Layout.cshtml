@@ -48,20 +48,24 @@
                 }
             }
 
-            </div>
         </div>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>Chicago Unlocked - 1543 W Division St. Chicago, IL 60640</p>
-            </footer>
-        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
 
+
+    <div class="panel-footer">
+        <p>Chicago Unlocked - Website by Brian Frederick</p>
+        <p>Photos by Michael Brosilow - Courtesy of The House Theatre of Chicago</p>
+    </div>
+
+</body>
         @Scripts.Render("~/bundles/jquery")
                 @Scripts.Render("~/bundles/bootstrap")
                 @Scripts.Render("~/bundles/angular")
                 @Scripts.Render("~/Scripts")
                 @RenderSection("scripts", required: false)
-            </body>
+
 </html>

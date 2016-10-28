@@ -31,20 +31,22 @@ namespace EscapeRoom.Controllers
 
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
-                
+                //search query for showname and minimum inventory
                 if (!string.IsNullOrEmpty(showName) && !string.IsNullOrEmpty(minInventory))
                 {
-                    list = entities.Sessions.Where(x => x.Title == showName && (x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity) >= minInventoryNum).Select(x => new SessionModel
+                    list = entities.Sessions.Where(x => x.Title == showName && (x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Any() ? (x.Game.Capacity) - x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Sum(y => y.Players.Count()) : x.Game.Capacity) >= minInventoryNum).Select(x => new SessionModel
                     {
                         Id = x.Id,
                         Title = x.Title,
                         Color = x.Color,
                         Start = x.Start,
                         Url = "../Checkout/Selection/" + x.Id,
-                        Inventory = x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity
+                        Inventory = x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Any() ? (x.Game.Capacity) - x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Sum(y => y.Players.Count()) : x.Game.Capacity
                     }).ToList();
 
                 }
+
+                //search query for only show name
                 else if(!string.IsNullOrEmpty(showName))
                 {
                     list = entities.Sessions.Where(x => x.Title == showName).Select(x => new SessionModel
@@ -53,23 +55,26 @@ namespace EscapeRoom.Controllers
                         Title = x.Title,
                         Color = x.Color,
                         Start = x.Start,
-                        Inventory = x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity,
+                        Inventory = x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Any() ? (x.Game.Capacity) - x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Sum(y => y.Players.Count()) : x.Game.Capacity,
                         Url = "../Checkout/Selection/" + x.Id
                     }).ToList();
                 }
 
+                //search query for only minimum inventory
                 else if (!string.IsNullOrEmpty(minInventory))
                 {
-                    list = entities.Sessions.Where(x => minInventoryNum <= (x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity)).Select(x => new SessionModel
+                    list = entities.Sessions.Where(x => minInventoryNum <= (x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Any() ? (x.Game.Capacity) - x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Sum(y => y.Players.Count()) : x.Game.Capacity)).Select(x => new SessionModel
                     {
                         Id = x.Id,
                         Title = x.Title,
                         Color = x.Color,
                         Start = x.Start,
-                        Inventory = x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity,
+                        Inventory = x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Any() ? (x.Game.Capacity) - x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Sum(y => y.Players.Count()) : x.Game.Capacity,
                         Url = "../Checkout/Selection/" + x.Id
                     }).ToList();
                 }
+
+                //no search curriculum 
                 else
                 {
                     list = entities.Sessions.Select(x => new SessionModel
@@ -78,13 +83,23 @@ namespace EscapeRoom.Controllers
                         Title = x.Title,
                         Color = x.Color,
                         Start = x.Start,
-                        Inventory = x.Baskets.Any() ? (x.Game.Capacity) - x.Baskets.Sum(y => y.Players.Count()) : x.Game.Capacity,
+                        Inventory = x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Any() ? (x.Game.Capacity) - x.Baskets.Where(z => z.PurchaseDate.HasValue || z.ReservedUntilDate > DateTime.UtcNow).Sum(y => y.Players.Count()) : x.Game.Capacity,
                         Url = "../Checkout/Selection/" + x.Id
                     }).ToList();
                 }
-                //shorten titles by getting first initials
+
+                //shorten titles by getting first initials & deal with sold out shows
                 foreach (var item in list)
                 {
+                    //deal with sold out shows
+                    if (item.Inventory == 0)
+                    {
+                        //item.Color = "light" + item.Color;
+                        item.Url = "../Checkout/SoldOut";
+                        item.SoldOut = true;
+                    }
+                    
+                    //get initials
                     char[] array = item.Title.ToCharArray();
                     List<char> charList = new List<char>();
                     charList.Add(array[0]);
@@ -98,7 +113,7 @@ namespace EscapeRoom.Controllers
                     item.Title = new string(charList.ToArray());
                 }
                 
-                //change to camelcase from initial caps for the javascript calendar package
+                //change to camelcase from initial caps for compatability with FullCalendar package
                 Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver camelSerializer = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
                 Newtonsoft.Json.JsonSerializerSettings settings = new Newtonsoft.Json.JsonSerializerSettings();
                 settings.ContractResolver = camelSerializer;

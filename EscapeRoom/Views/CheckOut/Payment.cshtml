@@ -2,13 +2,15 @@
 
 @{
     ViewBag.Title = "CheckOut";
+    string dateFormat = "MMMM dd, hh:mm tt";
+
 }
 
 <h2>Check Out</h2>
 <div class="row">
     <div class="col-sm-3">
         <h2>@Model.session.Title</h2>
-        <h4>@Model.session.Start</h4>        
+        <h4>@Model.session.Start.ToString(dateFormat)</h4>        
         <p>@string.Format("{0:C}", @Model.session.Price)</p>
         <p>@Model.numPlayers players</p>
         <em>@string.Format("{0:C}", @Model.session.Price * @Model.numPlayers) Total</em>
@@ -140,7 +142,7 @@
                     <div class="col-sm-3">
                         <div class="Zip">
                             <label for="Zip">Zip Code</label> <br />
-                            @Html.TextBoxFor(m => Model.Zip, new { id = "Zip", type = "number", @class = "form-control", required = "required" }) <br />
+                            @Html.TextBoxFor(m => Model.Zip, new { id = "Zip", @class = "form-control", required = "required" }) <br />
                         </div>
                     </div>
                 </div>
@@ -148,21 +150,21 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="CreditCard">Credit Card</label>
-                            @Html.TextBoxFor(m => Model.CreditCard, new { id = "CreditCard", type = "text", @class = "form-control" })
+                            @Html.TextBoxFor(m => Model.CreditCard, new { id = "CreditCard", @class = "form-control" })
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label for="Expiration">Exp</label>
-                            @Html.TextBoxFor(m => Model.Expiration, new { id = "Expiration", type = "text", @class = "form-control", })
+                            <label for="Expiration">Exp(mmyy)</label>
+                            @Html.TextBoxFor(m => Model.Expiration, new { id = "Expiration", @class = "form-control", })
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label for="SecCode">Sec</label>
-                            @Html.TextBoxFor(m => Model.SecCode, new { id = "SecCode", type = "number", @class = "form-control" })
+                            @Html.TextBoxFor(m => Model.SecCode, new { id = "SecCode",  @class = "form-control" })
                         </div>
                     </div>
                 </div>

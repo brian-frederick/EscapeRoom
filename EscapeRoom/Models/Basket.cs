@@ -24,6 +24,8 @@ namespace EscapeRoom.Models
         public int ID { get; set; }
         public int SessionID { get; set; }
         public Nullable<int> UserID { get; set; }
+        public Nullable<System.DateTime> PurchaseDate { get; set; }
+        public Nullable<System.DateTime> ReservedUntilDate { get; set; }
     
         public virtual Session Session { get; set; }
         public virtual User User { get; set; }

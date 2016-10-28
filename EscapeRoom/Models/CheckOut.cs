@@ -15,11 +15,11 @@ namespace EscapeRoom.Models
         public string Address { get; set; }
         public string Unit { get; set; }
         public string City { get; set; }
-        public int Zip { get; set; }
+        public int? Zip { get; set; }
         public string State { get; set; }
         public string CreditCard { get; set; }
-        public DateTime Expiration { get; set;}
-        public int SecCode { get; set; }
+        public DateTime? Expiration { get; set;}
+        public int? SecCode { get; set; }
         public int numPlayers { get; set; }
         public Player[] Players { get; set; }
         public Session session { get; set; }

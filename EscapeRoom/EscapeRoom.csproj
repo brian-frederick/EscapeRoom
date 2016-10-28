@@ -145,13 +145,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\arcadeBanner.jpg" />
     <Content Include="Content\Images\colors375x200.jpg" />
     <Content Include="Content\Images\controlPanel250x375.jpg" />
     <Content Include="Content\Images\controlPanel325x379.jpg" />
+    <Content Include="Content\Images\defendersBanner.jpg" />
     <Content Include="Content\Images\defendersBannerToScale.jpg" />
     <Content Include="Content\Images\engWall375x200.jpg" />
     <Content Include="Content\Images\goggles250x375.jpg" />
-    <Content Include="Content\Images\subsurfaceScaled.jpg" />
+    <Content Include="Content\Images\investigate.jpg" />
+    <Content Include="Content\Images\phonesBanner.jpg" />
     <Content Include="Content\Images\switchBoardFullToScale.jpg" />
     <Content Include="Content\Images\timeIsRunningOutToScale.jpg" />
     <Content Include="Content\Index.css" />
@@ -213,6 +216,7 @@
     <Content Include="Views\Sessions\Details.cshtml" />
     <Content Include="Views\Sessions\Edit.cshtml" />
     <Content Include="Views\Sessions\Index.cshtml" />
+    <Content Include="Views\CheckOut\SoldOut.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -226,8 +230,6 @@
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.min.css" />
     <Content Include="Content\fullcalendar.print.css" />
-    <Content Include="Content\Images\defendersBannerFull.jpg" />
-    <Content Include="Content\Images\timeIsRunningOutFull.jpg" />
     <Content Include="Content\Images\tldClock.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

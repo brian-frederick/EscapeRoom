@@ -139,8 +139,15 @@ namespace EscapeRoom.Controllers
 
             if (result.IsSuccess())
             {
+                using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
+                {
 
-                return RedirectToAction("Success", "Checkout", new { id = b.ID });
+                    Basket completedBasket = entities.Baskets.Single(x => x.ID == id);
+                    completedBasket.ReservedUntilDate = DateTime.UtcNow;
+                    entities.SaveChanges();
+                }
+
+                    return RedirectToAction("Success", "Checkout", new { id = b.ID });
             }
             else
             {
@@ -218,7 +225,7 @@ namespace EscapeRoom.Controllers
                     Title = session.Title
                 };
 
-                model.Inventory = session.Baskets.Any() ? (session.Game.Capacity) - session.Baskets.Sum(y => y.Players.Count()) : session.Game.Capacity;
+                model.Inventory = session.Baskets.Any() ? (session.Game.Capacity) - session.Baskets.Where(x => x.PurchaseDate.HasValue || x.ReservedUntilDate > DateTime.UtcNow).Sum(y => y.Players.Count()) : session.Game.Capacity;
                    
                 for (int i = 1; i <= model.Inventory; i++)
                     {
@@ -245,8 +252,10 @@ namespace EscapeRoom.Controllers
                     {
                         basket.Players.Add(new Player { });
                     }
+                    basket.ReservedUntilDate = DateTime.UtcNow.AddMinutes(15);
                     entities.Baskets.Add(basket);
                     entities.SaveChanges();
+                    
                     basketId = basket.ID;
                 }
             }
@@ -256,6 +265,11 @@ namespace EscapeRoom.Controllers
             }
 
             return RedirectToAction("Payment", "CheckOut", new { ID = basketId });
+        }
+
+        public ActionResult SoldOut()
+        {
+            return View();
         }
 
     }

@@ -2,7 +2,9 @@
 
 @{
     ViewBag.Title = "Success";
-    
+    string dateFormat = "MMMM dd, hh:mm tt";
+
+
 }
 
 <h2>Success!</h2>
@@ -10,8 +12,8 @@
 
 <div class="row">
     <div class="col-sm-3">
-        <h2>@Model.session.Title</h2>
-        <h4>@Model.session.Start</h4>
+        <h>@Model.session.Title</h>
+        <h4>@Model.session.Start.ToString(dateFormat)</h4>
         <p>@string.Format("{0:C}", @Model.session.Price) Per Player(s)</p>
         <p>@Model.numPlayers Player(s)</p>
         <p>@string.Format("{0:C}", @Model.session.Price * @Model.numPlayers) Total</p>

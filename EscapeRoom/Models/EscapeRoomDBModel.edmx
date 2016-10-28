@@ -12,6 +12,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SessionID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" />
+          <Property Name="PurchaseDate" Type="datetime" />
+          <Property Name="ReservedUntilDate" Type="datetime" />
         </EntityType>
         <EntityType Name="BasketPaymentInfo">
           <Key>
@@ -310,6 +312,8 @@
           <NavigationProperty Name="User" Relationship="EscapeRoomDBModel.FK_Basket_ToUser" FromRole="Basket" ToRole="User" />
           <NavigationProperty Name="PaymentInfoes" Relationship="EscapeRoomDBModel.BasketPaymentInfo" FromRole="Basket" ToRole="PaymentInfo" />
           <NavigationProperty Name="Players" Relationship="EscapeRoomDBModel.BasketPlayers" FromRole="Basket" ToRole="Player" />
+          <Property Name="PurchaseDate" Type="DateTime" Precision="3" />
+          <Property Name="ReservedUntilDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Game">
           <Key>
@@ -471,6 +475,8 @@
           <EntitySetMapping Name="Baskets">
             <EntityTypeMapping TypeName="EscapeRoomDBModel.Basket">
               <MappingFragment StoreEntitySet="Basket">
+                <ScalarProperty Name="ReservedUntilDate" ColumnName="ReservedUntilDate" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="SessionID" ColumnName="SessionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
