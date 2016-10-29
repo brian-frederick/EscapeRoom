@@ -32,7 +32,7 @@ namespace EscapeRoom
                       "~/Content/fullcalendar.css",
                       "~/Content/Index.css"));
 
-            bundles.Add(new ScriptBundle("~/Scripts").Include(
+            bundles.Add(new ScriptBundle("~/bundles/calendar").Include(
                 "~/Scripts/lib/moment.min.js",
                 "~/Scripts/fullcalendar.js",
                 "~/Scripts/Script.js"));

@@ -83,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Script\Script.PostDeployment1.sql" />
-    <None Include="dbo\Script\Script.PostDeployment2.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="EscapeRoomDB.refactorlog" />

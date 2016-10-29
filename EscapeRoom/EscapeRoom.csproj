@@ -217,6 +217,7 @@
     <Content Include="Views\Sessions\Edit.cshtml" />
     <Content Include="Views\Sessions\Index.cshtml" />
     <Content Include="Views\CheckOut\SoldOut.cshtml" />
+    <None Include="Properties\PublishProfiles\chicagounlocked.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
