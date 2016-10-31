@@ -214,12 +214,12 @@ namespace EscapeRoom.Controllers
                     i++;
                 }
 
-                //get basket for email info
+                //get basket and info for email info
                 Basket basket = entities.Baskets.Single(x => x.ID == id);
                 User user = entities.Users.Single(x => x.Id == basket.UserID);
                 userName = user.FirstName;
                 userEmail = user.Email;
-                numTix = (i + 1).ToString();
+                numTix = (i).ToString();
                 gameName = basket.Session.Title.ToString();
                 gameDate = basket.Session.Start.ToString();
                 players = players.Substring(0, players.Length - 2);
