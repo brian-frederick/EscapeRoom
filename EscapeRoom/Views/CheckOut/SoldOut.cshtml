@@ -1,11 +1,12 @@
 ﻿
 @{
     ViewBag.Title = "SoldOut";
+    ViewBag.Banner = "../Content/Images/defendersBannerToScale.jpg";
 }
 
 <h2>FOILED AGAIN!</h2>
 
-<p>There are no tickets available for this game!</p>
+<p>There are no tickets available for this game.</p>
 
-@Html.ActionLink("SoldOut", "CheckOut")
+@Html.ActionLink("Back to the Calendar!", "Index", "Calendar")
 

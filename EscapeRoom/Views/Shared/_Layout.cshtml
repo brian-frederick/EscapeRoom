@@ -25,7 +25,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Box Office", "Index", "Calendar")</li>
-                    <li>@Html.ActionLink("About", "Index", "About")</li>
+                    <li>@Html.ActionLink( "About", "About", "Home")</li>
                     @if (User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
@@ -68,4 +68,8 @@
                 @Scripts.Render("~/bundles/calendar")
                 @RenderSection("scripts", required: false)
 
+
 </html>
+
+
+

@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "CheckOut";
     string dateFormat = "MMMM dd, hh:mm tt";
-
+    ViewBag.Banner = "../Content/Images/arcadeBanner.jpg";
 }
 
 <h2>Check Out</h2>
@@ -17,7 +17,7 @@
     </div>
 
     
-
+<p>Just one more reminder that THIS IS NOT A REAL WEBSITE! You won't actually get tickets to an amazing thing here. This is just my portfolio piece. For testing purposes: use 4111111111111111. We do not store cc numbers but do confirm and send some data to Braintree.</p>
  @using (Html.BeginForm())
     {
         
@@ -67,7 +67,7 @@
                     <div class="col-sm-9">
                         <div class="form-group">
                             <label for="Unit">Unit Number</label> <br />
-                            @Html.TextBoxFor(m => Model.Unit, new { id = "Unit", @class = "form-control", required = "required" }) <br />
+                            @Html.TextBoxFor(m => Model.Unit, new { id = "Unit", @class = "form-control" }) <br />
                         </div>
                     </div>
                 </div>

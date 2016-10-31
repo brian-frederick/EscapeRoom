@@ -3,36 +3,43 @@
 @{
     ViewBag.Title = "WillCall";
     string noInfo = "No Player information available";
+    ViewBag.Banner = "~/Content/Images/phonesBanner.jpg";
 }
 
 <h2>WillCall</h2>
-
-@using (Html.BeginForm())
+@if (User.IsInRole("Administrator"))
 {
-    @Html.ValidationSummary(true)
 
-    <label for="Selection">Choose Session for Report</label> <br />
-    @Html.DropDownListFor(m => m.selection, new SelectList(Model.stringSessions), "")
-
-    <Input type="submit" value="search" class="btn btn-primary" />
-}
-
-@if (Model.players != null)
-{
-    int i = 1;
-    foreach (string item in Model.players)
+    using (Html.BeginForm())
     {
-        <p>
-            PLAYER @i.
-            @if (@item == null|| @item == "    ")
-            {
-                @noInfo
-            }
-            else
-            {
-                @item
-            }
-        </p>
-        i++;
+        @Html.ValidationSummary(true)
+
+        <label for="Selection">Choose Session for Report</label> <br />
+        @Html.DropDownListFor(m => m.selection, new SelectList(Model.stringSessions), "")
+
+        <Input type="submit" value="search" class="btn btn-primary" />
     }
+
+    if (Model.players != null)
+    {
+        int i = 1;
+        foreach (string item in Model.players)
+        {
+            <p>
+                PLAYER @i.
+                @if (@item == null || @item == "    ")
+                {
+                    @noInfo
+                }
+                else
+                {
+                    @item
+                }
+            </p>
+            i++;
+        }
+    }
+}
+else{
+    <p>You are not currently signed in as an administrator. This area is restricted.</p>
 }

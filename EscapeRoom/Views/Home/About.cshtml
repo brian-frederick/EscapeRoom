@@ -1,7 +1,57 @@
 ﻿@{
     ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+    ViewBag.Banner = "../Content/Images/defenderfriendsToScale.jpg";
 
-<p>Use this area to provide additional information.</p>
+}
+
+
+<div class="text-center">
+    <h2>@ViewBag.Title</h2>
+    <img id="aboutheadshot" src="~/Content/Images/Brian_Brick100x100.jpg" />
+
+</div>
+
+<h3>Brian Frederick</h3>
+<p>
+    I work primarily with .Net technologies, including ASP.NET MVC, C#, Entity Framework, and T-SQL. I am also proficient with
+    Javascript, JQuery, HTML, and CSS. I began by teaching myself from online courses and ultimately enrolled in a really great
+    Bootcamp here in Chicago called Coding Temple. Before becoming a .Net Developer, I had the opportunity to work for two really special
+    arts organizations called The Great River Shakespeare Festival and The House Theatre of Chicago. As the Managing Director
+    of The House Theatre Chicago I oversaw a period of unprecedented growth, expanding the annual budget from $600,000 to $1.6 in just
+    four years. At the Great River Shakespeare Festival, I designed and successfully completed the organization's first campaign
+    for over one million dollars and doubled corporate and foundation giving over two years. Growth and scaling up have always
+    been the most exhilirating part of a job for me. I'm thrilled to be working with technologies for which the opportunities
+    are nearly infinite.
+</p>
+<a href="~/Content/BrianFrederickFullStack.pdf" download>Download Resume</a>
+<h3>Chicago Unlocked E-Commerce Project</h3>
+<p>
+    This website was created as a portfolio piece to expand my .Net skillset and to resolve some business obstacles I had encountered
+    in my previous position as the Managing Director of The House Theatre of Chicago. Escape Rooms tend to have lower inventory and buyers
+    often want to bring bigger groups. There was no real way for buyers to see how many tickets were available until they were 3 or 4 steps
+    into the buying process, making the coordination of big groups (which was exactly what we wanted) really difficult. All pictures used
+    from The House Theatre's actual escape room, The Last Defender. The focus of the site was on functionality more than UI, so outside of a
+    few tweaks here and there, I've relied heavily on Bootstrap for style. Currently, this site includes the following features:
+</p>
+<ul>
+    <li>Visible availability of tickets on calendar page and each following step</li>
+    <li>Search capabilities by desired number of tickets, chosen game, or both</li>
+    <li>Management of Inventory using T-SQL</li>
+    <li>Purchase Baskets after 15 minutes and return tickets to general availability</li>
+    <li>Confirmation of Account Creation through Email</li>
+    <li>Though the site does not actually store or process credit card numbers, mock payments are communicated to the Braintree Sandbox</li>
+    <li>Administrator privileges such as new session or game creation and willcall generator</li>
+</ul>
+<p>The next version of the site will include:</p>
+<ul>
+    <li>A leaderboard ticker, featuring the top scores in each game</li>
+    <li>Display Inventory on List View of Calendar</li>
+    <li>A feedback form</li>
+    <li>Email Confirmation of fake purchases</li>
+    <li>Photo galleries</li>
+    <li>Make it prettier and more responsive</li>
+    <li>Probably a giant javascript animation that countdowns and makes the screen explode after you buy tickets</li>
+</ul>
+<p>I would be thrilled to know what you think. Let me know through the link below. Thanks for taking a look.</p>
+
+<a href="mailto:briandfrederick@gmail.com?subject=ChicagoUnlocked">Email Some Feedback</a>

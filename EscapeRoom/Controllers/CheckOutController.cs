@@ -143,7 +143,7 @@ namespace EscapeRoom.Controllers
                 {
 
                     Basket completedBasket = entities.Baskets.Single(x => x.ID == id);
-                    completedBasket.ReservedUntilDate = DateTime.UtcNow;
+                    completedBasket.PurchaseDate = DateTime.UtcNow;
                     entities.SaveChanges();
                 }
 
@@ -187,10 +187,19 @@ namespace EscapeRoom.Controllers
         [HttpPost]
         public ActionResult Success(CheckOut checkout, int id)
         {
+            //initialize variables for email
+            string userName = "";
+            string userEmail = "";
+            string gameName = "";
+            string gameDate = "";
+            string players = "";
+            string numTix = "";
+
+            //pull from database
             using (EscapeRoomDBEntities entities = new EscapeRoomDBEntities())
             {
-
-               List<int?> list = entities.sp_basketPlayers(id).ToList();
+                //get players and add info from form
+               List<int?> list = entities.sp_basketPlayers(id).ToList();                
 
                 int i = 0;
 
@@ -200,13 +209,34 @@ namespace EscapeRoom.Controllers
                     player.FirstName = checkout.Players[i].FirstName;
                     player.LastName = checkout.Players[i].LastName;
                     player.Email = checkout.Players[i].Email;
+                    players += player.FirstName + " " + player.LastName + ", ";
                     entities.SaveChanges();
                     i++;
                 }
-                
 
+                //get basket for email info
+                Basket basket = entities.Baskets.Single(x => x.ID == id);
+                User user = entities.Users.Single(x => x.Id == basket.UserID);
+                userName = user.FirstName;
+                userEmail = user.Email;
+                numTix = (i + 1).ToString();
+                gameName = basket.Session.Title.ToString();
+                gameDate = basket.Session.Start.ToString();
+                players = players.Substring(0, players.Length - 2);
             }
-            return RedirectToAction("Index", "Home");
+
+            string apiKey = ConfigurationManager.AppSettings["SendGrid.Key"];
+            SendGrid.SendGridAPIClient client = new SendGrid.SendGridAPIClient(apiKey);
+
+            SendGrid.Helpers.Mail.Email from = new SendGrid.Helpers.Mail.Email("admin@ChicagoUnlocked.com");
+            string subject = "Your Super Fake Chicago Unlocked Tickets";
+            SendGrid.Helpers.Mail.Email to = new SendGrid.Helpers.Mail.Email(userEmail);
+            string emailContent = string.Format("<html><body><p>{0}!</p><p>Thank you for purchasing {1} fake tickets to {2} on {3}. If this was not totally fake, we would also reach out to these players: {4}. This website is a work in progress for the purpose of experimenting with .Net technologies. Please let me know any feedback you have!</p> <a href='mailto:briandfrederick@gmail.com? subject = ChicagoUnlocked'>Email Some Feedback</a></body></html>", 
+                userName, numTix, gameName, gameDate, players);
+            SendGrid.Helpers.Mail.Content content = new SendGrid.Helpers.Mail.Content("Text/html", emailContent);
+            SendGrid.Helpers.Mail.Mail mail = new SendGrid.Helpers.Mail.Mail(from, subject, to, content);
+            client.client.mail.send.post(requestBody: mail.Get());
+            return RedirectToAction("About", "Home");
         }
 
         public ActionResult Selection(int id)

@@ -146,11 +146,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\arcadeBanner.jpg" />
+    <Content Include="Content\Images\Brian_Brick100x100.jpg" />
     <Content Include="Content\Images\colors375x200.jpg" />
     <Content Include="Content\Images\controlPanel250x375.jpg" />
     <Content Include="Content\Images\controlPanel325x379.jpg" />
-    <Content Include="Content\Images\defendersBanner.jpg" />
     <Content Include="Content\Images\defendersBannerToScale.jpg" />
+    <Content Include="Content\Images\defenderfriendsToScale.jpg" />
     <Content Include="Content\Images\engWall375x200.jpg" />
     <Content Include="Content\Images\goggles250x375.jpg" />
     <Content Include="Content\Images\investigate.jpg" />
@@ -217,6 +218,7 @@
     <Content Include="Views\Sessions\Edit.cshtml" />
     <Content Include="Views\Sessions\Index.cshtml" />
     <Content Include="Views\CheckOut\SoldOut.cshtml" />
+    <Content Include="Content\BrianFrederickFullStack.pdf" />
     <None Include="Properties\PublishProfiles\chicagounlocked.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

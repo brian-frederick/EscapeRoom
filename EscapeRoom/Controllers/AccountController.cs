@@ -74,12 +74,11 @@ namespace EscapeRoom.Controllers
                             Email = model.Email
                         },
                         true);
-                    //System.Web.Security.FormsAuthentication.SetAuthCookie(model.Email, true);
 
                     string apiKey = ConfigurationManager.AppSettings["SendGrid.Key"];
                     SendGrid.SendGridAPIClient client = new SendGrid.SendGridAPIClient(apiKey);
 
-                    SendGrid.Helpers.Mail.Email from = new SendGrid.Helpers.Mail.Email("admin@EscapeRoom.com");
+                    SendGrid.Helpers.Mail.Email from = new SendGrid.Helpers.Mail.Email("admin@ChicagoUnlocked.com");
                     string subject = "Complete your EscapeRoom Registration";
                     SendGrid.Helpers.Mail.Email to = new SendGrid.Helpers.Mail.Email(model.Email);
                     string emailContent = string.Format("<html><body><a href=\"{0}\">Complete your registration</a></body></html>", Request.Url.GetLeftPart(UriPartial.Authority) +

@@ -27,9 +27,75 @@
         </div>
     }
 </div>
+
+
+
 <div class="row explanation">
     <h3>What is an Escape Room?</h3>
     <p>
         An escape room is a physical adventure game in which players are locked in a room and have to use elements of the room to solve a series of puzzles and escape within a set time limit. The games are physical versions of "escape the room" video games. Games are set in a variety of fictional locations, such as prison cells, dungeons and space stations, and are popular as team building exercises. The earliest room was created in 2006, and escape rooms became popular in the United States, Japan, Taiwan, Canada, Israel and mainland China in the 2010s. Permanent escape rooms in fixed locations were first opened in Asia and followed later in North America, Europe, Australia, New Zealand, and South America. Escape rooms are a great activity for a group of friends, a first date, or a corporate team-building exercise. And no one is doing it better than Chicago Unlocked.
     </p>
 </div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Not a real website!</h4>
+            </div>
+            <div class="modal-body">
+                <p>Hello!</p>
+                <p>
+                    Chicago Unlocked is a fictional escape room company I invented in order to experiment with
+                    .Net technologies and build a portfolio E-Commerce Site. In my past life as an arts administrator, I
+                    worked for an innovative company called The House Theatre of Chicago, which created a highly successful,
+                    escape-room-like experience called The Last Defender. While we were so proud of the project, the
+                    experience of buying a ticket was pretty rough since we used traditional theatre ticketing software.
+                </p>
+                <p>
+                    Escape Rooms tend to have lower inventory and buyers often want to bring bigger groups. There was no real way for buyers to see
+                    how many tickets were available until they were 3 or 4 steps into the buying process, making the coordination of big groups
+                    (which was exactly what we wanted) really difficult.
+                </p>
+                <p>
+                    These were some of the business logic challenges I set out to address in building this solution, which features inventory alongside
+                    possible dates on a calendar and a robust option to search by show, by amount of inventory, or both. The site is still in progress
+                    but take a look and let me know what you think. You can also provide feedback or learn more about the site in the <a href="~/home/about">About</a> section.
+                </p>
+                <p>
+                    Special thanks to The House Theatre of Chicago. <br /> <br />
+                    And thank you for taking a look! <br /> <br />
+                    Brian Frederick
+                </p>
+                <img id="headshot" src="~/Content/Images/Brian_Brick100x100.jpg" />
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        var popped;
+
+        $(document).ready(popup());
+
+        function popup() {
+            if (popped != true) {
+                $('#myModal').modal('toggle');
+                popped = true;
+            }
+        }
+
+    </script>
+}
